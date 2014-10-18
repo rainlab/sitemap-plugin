@@ -6,7 +6,7 @@ tabs:
     fields:
 
         cms_pages:
-            label: CMS Pages
+            commentAbove: Select which CMS pages you would like to appear in the sitemap
             type: partial
             path: cms_page_list
             tab: CMS

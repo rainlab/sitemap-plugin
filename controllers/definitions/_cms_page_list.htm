@@ -1,1 +1,40 @@
-a
+<?php
+    use Cms\Classes\Page;
+?>
+
+<div class="list-preview list-flush">
+    <div class="control-list" data-control="listwidget">
+        <table class="table data" data-control="rowlink">
+            <thead>
+                <tr>
+                    <th class="list-checkbox">
+                        <div class="checkbox custom-checkbox nolabel">
+                            <input type="checkbox" id="checkboxAll" />
+                            <label for="checkboxAll"></label>
+                        </div>
+                    </th>
+                    <th><span>Page</span></th>
+                    <th><span>URL</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach (Page::all() as $page): ?>
+                    <tr>
+                        <td class="list-checkbox nolink">
+                            <div class="checkbox custom-checkbox nolabel">
+                                <input
+                                    id="checkbox_<?= $page->getId() ?>"
+                                    type="checkbox"
+                                    name="cms_pages[]"
+                                    value="<?= $page->getBaseFileName() ?>" />
+                                <label for="checkbox_<?= $page->getId() ?>">Check</label>
+                            </div>
+                        </td>
+                        <td><?= e($page->title) ?></td>
+                        <td><?= e($page->url) ?></td>
+                    </tr>
+                <?php endforeach ?>
+            </body>
+        </table>
+    </div>
+</div>
