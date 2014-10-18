@@ -1,0 +1,21 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Definition
+
+# Model Form Field configuration
+form: $/rainlab/sitemap/models/definition/fields.yaml
+
+# Model Class name
+modelClass: RainLab\Sitemap\Models\Definition
+
+# Default redirect location
+defaultRedirect: system/settings
+
+# Update page
+update:
+    title: Manage sitemap
+    redirect: rainlab/sitemap/definitions
+    redirectClose: system/settings

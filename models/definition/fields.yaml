@@ -1,0 +1,12 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+
+        cms_pages:
+            label: CMS Pages
+            type: partial
+            path: cms_page_list
+            tab: CMS
