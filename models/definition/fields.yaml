@@ -3,10 +3,9 @@
 # ===================================
 
 tabs:
+    stretch: true
     fields:
-
-        cms_pages:
-            commentAbove: Select which CMS pages you would like to appear in the sitemap
-            type: partial
-            path: cms_page_list
-            tab: CMS
+        items:
+            stretch: true
+            tab: Sitemap
+            type: RainLab\Sitemap\FormWidgets\SitemapItems

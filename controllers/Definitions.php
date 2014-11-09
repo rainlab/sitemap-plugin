@@ -2,6 +2,7 @@
 
 use URL;
 use Backend;
+use Request;
 use Redirect;
 use BackendMenu;
 use Cms\Classes\Theme;
@@ -9,6 +10,7 @@ use Backend\Classes\Controller;
 use System\Classes\SettingsManager;
 use RainLab\Sitemap\Models\Definition;
 use ApplicationException;
+use RainLab\Sitemap\Classes\DefinitionItem as SitemapItem;
 use Exception;
 
 /**
@@ -28,6 +30,9 @@ class Definitions extends Controller
 
         BackendMenu::setContext('October.System', 'system', 'settings');
         SettingsManager::setContext('RainLab.Sitemap', 'definitions');
+
+        $this->addJs('/modules/backend/assets/js/october.treeview.js', 'core');
+        $this->addJs('/plugins/rainlab/sitemap/assets/js/sitemap-definitions.js');
     }
 
     /**
@@ -67,5 +72,21 @@ class Definitions extends Controller
         catch (Exception $ex) {
             $this->handleError($ex);
         }
+    }
+
+    public function update_onSave($recordId = null, $context = null)
+    {
+        // @todo Remove this method?
+        // traceLog($_POST);
+        return $this->asExtension('FormController')->update_onSave($recordId, $context);
+    }
+
+    public function onGetMenuItemTypeInfo()
+    {
+        $type = Request::input('type');
+
+        return [
+            'menuItemTypeInfo' => SitemapItem::getTypeInfo($type)
+        ];
     }
 }

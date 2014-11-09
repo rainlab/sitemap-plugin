@@ -1,0 +1,27 @@
+<?php
+    $groupStatus = true;
+?>
+<li
+    data-status="<?= $groupStatus || !$item->items ? 'expanded' : 'collapsed' ?>"
+    data-sitemap-item="<?= e(json_encode($item->toArray())) ?>"
+>
+    <div>
+        <a href="#" data-sitemap-item-link>
+            <span class="title"><?= e($this->getReferenceDescription($item)) ?></span>
+            <span class="comment">
+                Priority: <span class="priority"><?= e($item->priority) ?></span>,
+                Change frequency: <span class="changefreq"><?= e($item->changefreq) ?></span>
+            </span>
+        </a>
+
+        <ul class="submenu">
+            <li>
+                <p>
+                    <a href="javascript:;" data-control="delete-sitemap-item">
+                        <i class="icon-trash-o control-icon"></i>
+                    </a>
+                </p>
+            </li>
+        </ul>
+    </div>
+</li>

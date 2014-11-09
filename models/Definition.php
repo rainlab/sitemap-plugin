@@ -2,7 +2,10 @@
 
 use URL;
 use Model;
+use Event;
+use Request;
 use DOMDocument;
+use RainLab\Sitemap\Classes\DefinitionItem;
 
 /**
  * Definition Model
@@ -36,33 +39,29 @@ class Definition extends Model
     protected $fillable = [];
 
     /**
+     * @var integer A tally of URLs added to the sitemap
+     */
+    protected $urlCount = 0;
+
+    /**
      * @var array List of attribute names which are json encoded and decoded from the database.
      */
     protected $jsonable = ['data'];
 
     /**
-     * @var integer A tally of URLs added to the sitemap
+     * @var array The menu items.
+     * Items are objects of the \RainLab\Pages\Classes\MenuItem class.
      */
-    protected $urlCount = 0;
+    protected $items;
 
     public function beforeSave()
     {
-        /*
-         * Dynamic attributes are stored in the jsonable attribute 'data'.
-         */
-        $staticAttributes = ['id', 'theme', 'data'];
-        $dynamicAttributes = array_except($this->getAttributes(), $staticAttributes);
-
-        $this->data = $dynamicAttributes;
-        $this->setRawAttributes(array_only($this->getAttributes(), $staticAttributes));
+        $this->data = (array) $this->items;
     }
 
     public function afterFetch()
     {
-        /*
-         * Fill this model with the jsonable attributes kept in 'data'.
-         */
-        $this->setRawAttributes((array) $this->getAttributes() + (array) $this->data, true);
+        $this->items = DefinitionItem::initFromArray($this->data);
     }
 
     public function generateSitemap()
@@ -76,29 +75,72 @@ class Definition extends Model
         $urlset->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $urlset->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 
+        $currentUrl = Request::path();
+
         /*
          * Cycle each page and add its URL
          */
-        $pages = [];
+        foreach ($this->items as $item) {
 
-        foreach ($pages as $page) {
+            if ($item->type == 'url') {
+                // $pageUrl = URL::to('/');
+                $pageUrl = URL::to($item->url);
+            }
+            else {
 
-            $pageUrl = URL::to('/');
+                $apiResult = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $this->theme]);
+                if (is_array($apiResult)) {
+                    foreach ($apiResult as $itemInfo) {
+                        if (!is_array($itemInfo))
+                            continue;
+
+                        if (!$item->replace && isset($itemInfo['url'])) {
+                            $pageUrl = $itemInfo['url'];
+                        }
+
+                        // if (isset($itemInfo['items'])) {
+                        //     $itemIterator = function($items) use (&$itemIterator, $parentReference) {
+                        //         $result = [];
+
+                        //         foreach ($items as $item) {
+                        //             $reference = new MenuItemReference();
+                        //             $reference->title = isset($item['title']) ? $item['title'] : '--no title--';
+                        //             $reference->url = isset($item['url']) ? $item['url'] : '#';
+                        //             $reference->isActive = isset($item['isActive']) ? $item['isActive'] : false;
+
+                        //             if (!strlen($parentReference->url)) {
+                        //                 $parentReference->url = $reference->url;
+                        //                 $parentReference->isActive = $reference->isActive;
+                        //             }
+
+                        //             if (isset($item['items']))
+                        //                 $reference->items = $itemIterator($item['items']);
+
+                        //             $result[] = $reference;
+                        //         }
+
+                        //         return $result;
+                        //     };
+
+                        //     $parentReference->items = $itemIterator($itemInfo['items']);
+                        // }
+                    }
+                }
+
+            }
+
             $urlElement = $this->prepareUrlElement(
                 $xml,
                 $pageUrl,
-                date('c', $page->mtime),
+                // date('c', $page->mtime),
+                date('c'),
                 'weekly',
                 '0.7'
             );
 
             if ($urlElement)
-                $urlset->appendChild($url);
+                $urlset->appendChild($urlElement);
         }
-
-        /*
-         * @todo Cycle each registered definition type and add it
-         */
 
         $xml->appendChild($urlset);
         return $xml->saveXML();

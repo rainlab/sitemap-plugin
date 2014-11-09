@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <?= Form::open(['class'=>'layout-item stretch layout-column']) ?>
+    <?= Form::open(['class'=>'layout-item stretch layout-column', 'id' => 'sitemapForm']) ?>
 
         <?= $this->formRender() ?>
 
@@ -30,19 +30,10 @@
                 </button>
                 <button
                     type="button"
-                    data-request="onSave"
-                    data-request-data="close:1"
-                    data-hotkey="ctrl+enter, cmd+enter"
-                    data-load-indicator="Saving Definition..."
-                    class="btn btn-default">
-                    Save and Close
-                </button>
-                <button
-                    type="button"
                     class="oc-icon-trash-o btn-icon danger pull-right"
                     data-request="onDelete"
-                    data-load-indicator="Deleting Definition..."
-                    data-request-confirm="Do you really want to delete this definition?">
+                    data-load-indicator="Emptying Definition..."
+                    data-request-confirm="Do you really want to empty this definition?">
                 </button>
                 <span class="btn-text">
                     or <a href="<?= Backend::url('rainlab/sitemap/definitions') ?>">Cancel</a>
