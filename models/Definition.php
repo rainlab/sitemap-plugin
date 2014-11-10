@@ -134,8 +134,8 @@ class Definition extends Model
                 $pageUrl,
                 // date('c', $page->mtime),
                 date('c'),
-                'weekly',
-                '0.7'
+                $item->changefreq,
+                $item->priority
             );
 
             if ($urlElement)

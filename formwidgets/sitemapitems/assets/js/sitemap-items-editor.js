@@ -24,7 +24,7 @@
         })
 
         // Submenu item is clicked in the master tabs
-        this.$el.on('submenu.oc.treeview', $.proxy(this.onSubmenuItemClick, this))
+        this.$el.on('submenu.oc.treeview', $.proxy(this.onSubItemClick, this))
 
         this.$el.on('click', 'a[data-control="add-item"]', function(e) {
             self.onCreateItem(e.target)
@@ -35,9 +35,9 @@
     /*
      * Triggered when a submenu item is clicked in the menu editor.
      */
-    SitemapItemsEditor.prototype.onSubmenuItemClick = function(e) {
+    SitemapItemsEditor.prototype.onSubItemClick = function(e) {
         if ($(e.relatedTarget).data('control') == 'delete-sitemap-item')
-            this.onDeleteMenuItem(e.relatedTarget)
+            this.onDeleteItem(e.relatedTarget)
 
         return false
     }
@@ -45,8 +45,8 @@
     /*
      * Removes a menu item
      */
-    SitemapItemsEditor.prototype.onDeleteMenuItem = function(link) {
-        if (!confirm('Do you really want to delete the menu item? This will also delete the subitems, if any.'))
+    SitemapItemsEditor.prototype.onDeleteItem = function(link) {
+        if (!confirm('Do you really want to delete this sitemap definition?'))
             return
 
         $(link).trigger('change')
@@ -84,10 +84,10 @@
 
             self.$popupContainer.on('keydown', function(e) {
                 if (e.which == 13)
-                    self.applyMenuItem()
+                    self.applySitemapItem()
             })
 
-            $('button[data-control="apply-btn"]', self.$popupContainer).click($.proxy(self.applyMenuItem, self))
+            $('button[data-control="apply-btn"]', self.$popupContainer).click($.proxy(self.applySitemapItem, self))
 
             var $updateTypeOptionsBtn = $('<a class="sidebar-control" href="#"><i class="icon-refresh"></i></a>')
             $('div[data-field-name=reference]').addClass('input-sidebar-control').append($updateTypeOptionsBtn)
@@ -266,7 +266,7 @@
         }
     }
 
-    SitemapItemsEditor.prototype.applyMenuItem = function() {
+    SitemapItemsEditor.prototype.applySitemapItem = function() {
         var self = this,
             data = {},
             propertyNames = this.$el.data('item-properties'),

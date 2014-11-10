@@ -29,8 +29,8 @@ class Plugin extends PluginBase
     {
         return [
             'definitions' => [
-                'label'       => 'Manage sitemap',
-                'description' => 'Define how the sitemap.xml file is generated.',
+                'label'       => 'Sitemap',
+                'description' => 'Manage how the sitemap.xml file is generated.',
                 'icon'        => 'icon-sitemap',
                 'url'         => Backend::url('rainlab/sitemap/definitions'),
                 'category'    => SettingsManager::CATEGORY_CMS,

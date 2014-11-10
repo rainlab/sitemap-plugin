@@ -81,8 +81,11 @@ class DefinitionItem
      */
     public static function initFromArray($items)
     {
-        $result = [];
+        if (!is_array($items)) {
+            return null;
+        }
 
+        $result = [];
         foreach ($items as $itemData) {
             $obj = new self;
 
