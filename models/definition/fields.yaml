@@ -4,6 +4,7 @@
 
 tabs:
     stretch: true
+    cssClass: tabs-offset
     fields:
         items:
             stretch: true

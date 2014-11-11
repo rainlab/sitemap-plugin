@@ -12,10 +12,18 @@
          */
         var self = this
 
-        // Handle the sitemap saving
+        /*
+         * Handle the sitemap saving
+         */
         $(document).on('oc.beforeRequest', '#sitemapForm', function(e, data) {
             return self.onSaveSitemapItems(this, e, data)
         })
+
+        /*
+         * Compact tab pane
+         */
+        var $primaryPanel = $('.control-tabs.primary')
+        $('.tab-pane', $primaryPanel).addClass('pane-compact')
     }
 
     /*
