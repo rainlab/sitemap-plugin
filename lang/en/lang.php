@@ -16,8 +16,6 @@ return [
         'unnamed' => 'Unnamed menu item',
         'add_item' => 'Add <u>I</u>tem',
         'new_item' => 'New menu item',
-        'replace' => 'Replace this item with its generated children',
-        'replace_comment' => 'Use this checkbox to push generated menu items to the same level with this item. This item itself will be hidden.',
         'cms_page' => 'CMS Page',
         'cms_page_comment' => 'Select a page to open when the menu item is clicked.',
         'reference_required' => 'The menu item reference is required.',

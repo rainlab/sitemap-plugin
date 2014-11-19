@@ -46,11 +46,6 @@ class DefinitionItem
     public $reference;
 
     /**
-     * @var boolean Indicates that generated items should replace this item.
-     */
-    public $replace;
-
-    /**
      * @var string Specifies the CMS page path to resolve dynamic menu items to.
      */
     public $cmsPage;
@@ -70,8 +65,7 @@ class DefinitionItem
         'type',
         'url',
         'reference',
-        'cmsPage',
-        'replace'
+        'cmsPage'
     ];
 
     /**

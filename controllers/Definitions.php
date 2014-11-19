@@ -45,9 +45,7 @@ class Definitions extends Controller
             if (!$theme = Theme::getEditTheme())
                 throw new ApplicationException('Unable to find the active theme.');
 
-            $model = Definition::firstOrCreate(['theme' => $theme->getDirName()]);
-            $updateUrl = sprintf('rainlab/sitemap/definitions/update/%s', $model->getKey());
-            return Redirect::to(Backend::url($updateUrl));
+            return $this->redirectToThemeSitemap($theme);
         }
         catch (Exception $ex) {
             $this->handleError($ex);
@@ -62,25 +60,30 @@ class Definitions extends Controller
         $this->bodyClass = 'compact-container';
 
         try {
-            if (!$theme = Theme::getEditTheme())
+            if (!$editTheme = Theme::getEditTheme())
                 throw new ApplicationException('Unable to find the active theme.');
+
+            $result = $this->asExtension('FormController')->update($recordId, $context);
+
+            $model = $this->formGetModel();
+            $theme = Theme::load($model->theme);
+
+            /*
+             * Not editing the active sitemap definition
+             */
+            if ($editTheme->getDirName() != $theme->getDirName()) {
+                return $this->redirectToThemeSitemap($editTheme);
+            }
 
             $this->vars['theme'] = $theme;
             $this->vars['themeName'] = $theme->getConfigValue('name', $theme->getDirName());
             $this->vars['sitemapUrl'] = URL::to('/sitemap.xml');
 
-            return $this->asExtension('FormController')->update($recordId, $context);
+            return $result;
         }
         catch (Exception $ex) {
             $this->handleError($ex);
         }
-    }
-
-    public function update_onSave($recordId = null, $context = null)
-    {
-        // @todo Remove this method?
-        // traceLog($_POST);
-        return $this->asExtension('FormController')->update_onSave($recordId, $context);
     }
 
     public function onGetMenuItemTypeInfo()
@@ -90,5 +93,16 @@ class Definitions extends Controller
         return [
             'menuItemTypeInfo' => SitemapItem::getTypeInfo($type)
         ];
+    }
+
+    //
+    // Helpers
+    //
+
+    protected function redirectToThemeSitemap($theme)
+    {
+        $model = Definition::firstOrCreate(['theme' => $theme->getDirName()]);
+        $updateUrl = sprintf('rainlab/sitemap/definitions/update/%s', $model->getKey());
+        return Redirect::to(Backend::url($updateUrl));
     }
 }

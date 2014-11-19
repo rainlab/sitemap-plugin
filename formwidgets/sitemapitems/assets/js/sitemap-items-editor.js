@@ -177,7 +177,6 @@
             $optionSelector = $('select', $referenceFormGroup),
             $nestingFormGroup = $('div[data-field-name="nesting"]', this.$popupContainer),
             $urlFormGroup = $('div[data-field-name="url"]', this.$popupContainer),
-            $replaceFormGroup = $('div[data-field-name="replace"]', this.$popupContainer),
             $cmsPageFormGroup = $('div[data-field-name="cmsPage"]', this.$popupContainer),
             $cmsPageSelector = $('select', $cmsPageFormGroup),
             prevSelectedReference = $optionSelector.val(),
@@ -237,7 +236,6 @@
 
         $nestingFormGroup.toggle(typeInfo.nesting !== undefined && typeInfo.nesting)
         $urlFormGroup.toggle(type == 'url')
-        $replaceFormGroup.toggle(typeInfo.dynamicItems !== undefined && typeInfo.dynamicItems)
 
         $(document).trigger('render')
 
@@ -246,7 +244,6 @@
                 $referenceFormGroup,
                 $cmsPageFormGroup,
                 $('div.custom-checkbox', $nestingFormGroup),
-                $('div.custom-checkbox', $replaceFormGroup),
                 $('input', $urlFormGroup)
             ]
 
@@ -277,7 +274,6 @@
             },
             typeInfoPropertyMap = {
                 reference: 'references',
-                replace: 'dynamicItems',
                 cmsPage: 'cmsPages'
             },
             typeInfo = {},

@@ -5,6 +5,7 @@ use Model;
 use Event;
 use Request;
 use DOMDocument;
+use Cms\Classes\Theme;
 use RainLab\Sitemap\Classes\DefinitionItem;
 
 /**
@@ -54,6 +55,16 @@ class Definition extends Model
      */
     protected $items;
 
+    /**
+     * @var DOMDocument element
+     */
+    protected $urlSet;
+
+    /**
+     * @var DOMDocument
+     */
+    protected $xmlObject;
+
     public function beforeSave()
     {
         $this->data = (array) $this->items;
@@ -66,87 +77,121 @@ class Definition extends Model
 
     public function generateSitemap()
     {
-        // header("Content-Type: application/xml");
-        $xml = new DOMDocument;
-        $xml->encoding = 'UTF-8';
-
-        $urlset = $xml->createElement('urlset');
-        $urlset->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-        $urlset->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $urlset->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
-
         $currentUrl = Request::path();
+        $theme = Theme::load($this->theme);
 
         /*
          * Cycle each page and add its URL
          */
         foreach ($this->items as $item) {
 
+            /*
+             * Explicit URL
+             */
             if ($item->type == 'url') {
-                // $pageUrl = URL::to('/');
-                $pageUrl = URL::to($item->url);
+                $this->addItemToSet($item, URL::to($item->url));
             }
+            /*
+             * Registered sitemap type
+             */
             else {
 
-                $apiResult = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $this->theme]);
-                if (is_array($apiResult)) {
-                    foreach ($apiResult as $itemInfo) {
-                        if (!is_array($itemInfo))
-                            continue;
+                $apiResult = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $theme]);
 
-                        if (!$item->replace && isset($itemInfo['url'])) {
-                            $pageUrl = $itemInfo['url'];
-                        }
+                if (!is_array($apiResult))
+                    continue;
 
-                        // if (isset($itemInfo['items'])) {
-                        //     $itemIterator = function($items) use (&$itemIterator, $parentReference) {
-                        //         $result = [];
+                foreach ($apiResult as $itemInfo) {
+                    if (!is_array($itemInfo))
+                        continue;
 
-                        //         foreach ($items as $item) {
-                        //             $reference = new MenuItemReference();
-                        //             $reference->title = isset($item['title']) ? $item['title'] : '--no title--';
-                        //             $reference->url = isset($item['url']) ? $item['url'] : '#';
-                        //             $reference->isActive = isset($item['isActive']) ? $item['isActive'] : false;
+                    /*
+                     * Single item
+                     */
+                    if (isset($itemInfo['url'])) {
+                        $this->addItemToSet($item, $itemInfo['url'], array_get($itemInfo, 'mtime'));
+                    }
 
-                        //             if (!strlen($parentReference->url)) {
-                        //                 $parentReference->url = $reference->url;
-                        //                 $parentReference->isActive = $reference->isActive;
-                        //             }
+                    /*
+                     * Multiple items
+                     */
+                    if (isset($itemInfo['items'])) {
 
-                        //             if (isset($item['items']))
-                        //                 $reference->items = $itemIterator($item['items']);
+                        $parentItem = $item;
 
-                        //             $result[] = $reference;
-                        //         }
+                        $itemIterator = function($items) use (&$itemIterator, $parentItem) {
+                            foreach ($items as $item) {
+                                if (isset($item['url'])) {
+                                    $this->addItemToSet($parentItem, $item['url'], array_get($item, 'mtime'));
+                                }
 
-                        //         return $result;
-                        //     };
+                                if (isset($item['items'])) {
+                                    $itemIterator($item['items']);
+                                }
+                            }
+                        };
 
-                        //     $parentReference->items = $itemIterator($itemInfo['items']);
-                        // }
+                        $itemIterator($itemInfo['items']);
                     }
                 }
 
             }
 
-            $urlElement = $this->prepareUrlElement(
-                $xml,
-                $pageUrl,
-                // date('c', $page->mtime),
-                date('c'),
-                $item->changefreq,
-                $item->priority
-            );
-
-            if ($urlElement)
-                $urlset->appendChild($urlElement);
         }
 
-        $xml->appendChild($urlset);
+        $urlSet = $this->makeUrlSet();
+        $xml = $this->makeXmlObject();
+        $xml->appendChild($urlSet);
         return $xml->saveXML();
     }
 
-    protected function prepareUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority)
+    protected function makeXmlObject()
+    {
+        if ($this->xmlObject !== null)
+            return $this->xmlObject;
+
+        $xml = new DOMDocument;
+        $xml->encoding = 'UTF-8';
+
+        return $this->xmlObject = $xml;
+    }
+
+    protected function makeUrlSet()
+    {
+        if ($this->urlSet !== null)
+            return $this->urlSet;
+
+        $xml = $this->makeXmlObject();
+        $urlSet = $xml->createElement('urlset');
+        $urlSet->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+        $urlSet->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $urlSet->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
+
+        return $this->urlSet = $urlSet;
+    }
+
+    protected function addItemToSet($item, $url, $mtime = null)
+    {
+        $xml = $this->makeXmlObject();
+        $urlSet = $this->makeUrlSet();
+        $mtime = $mtime ? date('c', $mtime) : date('c');
+
+        $urlElement = $this->makeUrlElement(
+            $xml,
+            $url,
+            $mtime,
+            $item->changefreq,
+            $item->priority
+        );
+
+        if ($urlElement) {
+            $urlSet->appendChild($urlElement);
+        }
+
+        return $urlSet;
+    }
+
+    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority)
     {
         if ($this->urlCount >= self::MAX_URLS)
             return false;

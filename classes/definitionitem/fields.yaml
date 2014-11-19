@@ -28,12 +28,6 @@ fields:
         type: checkbox
         default: true
 
-    replace:
-        label: rainlab.sitemap::lang.item.replace
-        comment: rainlab.sitemap::lang.item.replace_comment
-        type: checkbox
-        default: true
-
     priority:
         span: left
         label: rainlab.sitemap::lang.item.priority
