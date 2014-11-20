@@ -18,12 +18,12 @@
 
         this.typeInfo = {}
 
-        // Menu items is clicked
+        // Sitemap item is clicked
         this.$el.on('open.oc.treeview', function(e) {
             return self.onItemClick(e.relatedTarget)
         })
 
-        // Submenu item is clicked in the master tabs
+        // Sub item is clicked in the master tabs
         this.$el.on('submenu.oc.treeview', $.proxy(this.onSubItemClick, this))
 
         this.$el.on('click', 'a[data-control="add-item"]', function(e) {
@@ -33,7 +33,7 @@
     }
 
     /*
-     * Triggered when a submenu item is clicked in the menu editor.
+     * Triggered when a sub item is clicked in the editor.
      */
     SitemapItemsEditor.prototype.onSubItemClick = function(e) {
         if ($(e.relatedTarget).data('control') == 'delete-sitemap-item')
@@ -43,7 +43,7 @@
     }
 
     /*
-     * Removes a menu item
+     * Removes an item
      */
     SitemapItemsEditor.prototype.onDeleteItem = function(link) {
         if (!confirm('Do you really want to delete this sitemap definition?'))
@@ -59,7 +59,7 @@
     }
 
     /*
-     * Opens the menu item editor
+     * Opens the item editor
      */
     SitemapItemsEditor.prototype.onItemClick = function(item, newItemMode) {
         var $item = $(item),
@@ -162,13 +162,13 @@
         }
 
         $.oc.stripeLoadIndicator.show()
-        this.$popupForm.request('onGetMenuItemTypeInfo')
+        this.$popupForm.request('onGetItemTypeInfo')
             .always(function(){
                 $.oc.stripeLoadIndicator.hide()
             })
             .done(function(data){
-                self.typeInfo[type] = data.menuItemTypeInfo
-                self.applyTypeInfo(data.menuItemTypeInfo, type, focusList)
+                self.typeInfo[type] = data.sitemapItemTypeInfo
+                self.applyTypeInfo(data.sitemapItemTypeInfo, type, focusList)
             })
     }
 

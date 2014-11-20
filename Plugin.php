@@ -19,7 +19,7 @@ class Plugin extends PluginBase
     {
         return [
             'name'        => 'Sitemap',
-            'description' => 'Generate sitemap.xml files',
+            'description' => 'Generate a sitemap.xml file for your website.',
             'author'      => 'Alexey Bobkov, Samuel Georges',
             'icon'        => 'icon-sitemap'
         ];
@@ -34,7 +34,6 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-sitemap',
                 'url'         => Backend::url('rainlab/sitemap/definitions'),
                 'category'    => SettingsManager::CATEGORY_CMS,
-                // 'order'       => 500,
             ]
         ];
     }

@@ -50,8 +50,8 @@ class Definition extends Model
     protected $jsonable = ['data'];
 
     /**
-     * @var array The menu items.
-     * Items are objects of the \RainLab\Pages\Classes\MenuItem class.
+     * @var array The sitemap items.
+     * Items are objects of the \RainLab\Sitemap\Classes\DefinitionItem class.
      */
     protected $items;
 
@@ -172,6 +172,9 @@ class Definition extends Model
 
     protected function addItemToSet($item, $url, $mtime = null)
     {
+        if ($mtime instanceof \DateTime)
+            $mtime = $mtime->getTimestamp();
+
         $xml = $this->makeXmlObject();
         $urlSet = $this->makeUrlSet();
         $mtime = $mtime ? date('c', $mtime) : date('c');

@@ -54,3 +54,31 @@ The Sitemap plugin works *out of the box* and does not require any direct develo
 ##### Registering new sitemap definition item types
 
 The Sitemap plugin shares the same events for registering item types as the [Pages plugin](http://octobercms.com/plugin/rainlab-pages). See the documentation provided by this plugin for more information.
+
+A small addition is required when resolving items, via the following event:
+
+* `pages.menuitem.resolveItem` event handler "resolves" a menu item information and returns the actual item URL, title, an indicator whether the item is currently active, and subitems, if any.
+
+##### Resolving items
+
+When resolving an item, each item should return an extra key in the array called `mtime`. This should be a Date object (see `Carbon\Carbon`) or a timestamp value compatible with PHP's `date()` function and represent the last time the link was modified.
+
+Expected result format:
+
+```
+Array (
+    [url] => http://example.com/blog/category/another-category
+    [mtime] => Carbon::now(),
+    [items] => Array (
+        [0] => Array  (
+            [url] => http://example.com/blog/category/another-category
+            [mtime] => Carbon::now(),
+        )
+
+        [1] => Array (
+                [url] => http://example.com/blog/category/news
+                [mtime] => Carbon::now(),
+        )
+    )
+)
+```

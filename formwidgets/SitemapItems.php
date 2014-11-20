@@ -5,7 +5,7 @@ use RainLab\Sitemap\Classes\DefinitionItem as SitemapItem;
 use Backend\Classes\FormWidgetBase;
 
 /**
- * Menu items widget.
+ * Sitemap items widget.
  *
  * @package october\backend
  * @author Alexey Bobkov, Samuel Georges
@@ -19,10 +19,6 @@ class SitemapItems extends FormWidgetBase
      * {@inheritDoc}
      */
     public $defaultAlias = 'sitemapitems';
-
-    public $addSubitemLabel = 'rainlab.pages::lang.menu.add_subitem';
-
-    public $noRecordsMessage = 'rainlab.pages::lang.menu.no_records';
 
     public $referenceRequiredMessage = 'rainlab.sitemap::lang.item.reference_required';
 
@@ -51,9 +47,9 @@ class SitemapItems extends FormWidgetBase
      */
     public function prepareVars()
     {
-        $menuItem = new SitemapItem;
+        $sitemapItem = new SitemapItem;
 
-        $this->vars['itemProperties'] = json_encode($menuItem->fillable);
+        $this->vars['itemProperties'] = json_encode($sitemapItem->fillable);
         $this->vars['items'] = $this->model->items;
 
         $emptyItem = new SitemapItem;
@@ -65,7 +61,7 @@ class SitemapItems extends FormWidgetBase
         $this->vars['emptyItem'] = $emptyItem;
 
         $widgetConfig = $this->makeConfig('@/plugins/rainlab/sitemap/classes/definitionitem/fields.yaml');
-        $widgetConfig->model = $menuItem;
+        $widgetConfig->model = $sitemapItem;
         $widgetConfig->alias = $this->alias.'SitemapItem';
 
         $this->vars['itemFormWidget'] = $this->makeWidget('Backend\Widgets\Form', $widgetConfig);
@@ -93,16 +89,18 @@ class SitemapItems extends FormWidgetBase
 
     /**
      * Returns the item reference description.
-     * @param \RainLab\Pages\Classes\SitemapItem $item Specifies the menu item
+     * @param \RainLab\Pages\Classes\SitemapItem $item Specifies the sitemap item
      * @return string 
      */
     protected function getReferenceDescription($item)
     {
-        if ($this->typeListCache === false)
+        if ($this->typeListCache === false) {
             $this->typeListCache = $item->getTypeOptions();
+        }
 
-        if (!isset($this->typeInfoCache[$item->type]))
+        if (!isset($this->typeInfoCache[$item->type])) {
             $this->typeInfoCache[$item->type] = SitemapItem::getTypeInfo($item->type);
+        }
 
         if (isset($this->typeInfoCache[$item->type])) {
             $result = $this->typeListCache[$item->type];

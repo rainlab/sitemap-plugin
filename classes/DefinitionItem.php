@@ -20,12 +20,12 @@ class DefinitionItem
     public $priority;
 
     /**
-     * @var boolean Determines whether the auto-generated menu items could have subitems.
+     * @var boolean Determines whether the auto-generated items could have subitems.
      */
     public $nesting;
 
     /**
-     * @var string Specifies the menu item type - URL, static page, etc.
+     * @var string Specifies the item type - URL, static page, etc.
      */
     public $type;
 
@@ -35,7 +35,7 @@ class DefinitionItem
     public $url;
 
     /**
-     * @var string Specifies the menu item code.
+     * @var string Specifies the item code.
      */
     public $code;
 
@@ -46,7 +46,7 @@ class DefinitionItem
     public $reference;
 
     /**
-     * @var string Specifies the CMS page path to resolve dynamic menu items to.
+     * @var string Specifies the CMS page path to resolve dynamic items to.
      */
     public $cmsPage;
 
@@ -69,8 +69,8 @@ class DefinitionItem
     ];
 
     /**
-     * Initializes a menu item from a data array.
-     * @param array $items Specifies the menu item data.
+     * Initializes a item from a data array.
+     * @param array $items Specifies the item data.
      * @return Returns an array of the Item objects.
      */
     public static function initFromArray($items)
@@ -96,7 +96,7 @@ class DefinitionItem
     }
 
     /**
-     * Returns a list of registered menu item types
+     * Returns a list of registered item types
      * @return array Returns an array of registered item types
      */
     public function getTypeOptions($keyValue = null)
@@ -164,8 +164,8 @@ class DefinitionItem
     }
 
     /**
-     * Converts the menu item data to an array
-     * @return array Returns the menu item data as array
+     * Converts the item data to an array
+     * @return array Returns the item data as array
      */
     public function toArray()
     {

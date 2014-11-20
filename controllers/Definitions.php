@@ -86,12 +86,12 @@ class Definitions extends Controller
         }
     }
 
-    public function onGetMenuItemTypeInfo()
+    public function onGetItemTypeInfo()
     {
         $type = Request::input('type');
 
         return [
-            'menuItemTypeInfo' => SitemapItem::getTypeInfo($type)
+            'sitemapItemTypeInfo' => SitemapItem::getTypeInfo($type)
         ];
     }
 
