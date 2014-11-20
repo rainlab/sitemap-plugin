@@ -77,6 +77,9 @@ class Definition extends Model
 
     public function generateSitemap()
     {
+        if (!$this->items)
+            return;
+
         $currentUrl = Request::path();
         $theme = Theme::load($this->theme);
 
