@@ -49,10 +49,10 @@ fields:
         label: rainlab.sitemap::lang.item.changefreq
         type: dropdown
         options:
-            always: always
-            hourly: hourly
-            daily: daily
-            weekly: weekly
-            monthly: monthly
-            yearly: yearly
-            never: never
+            always: rainlab.sitemap::lang.item.always
+            hourly: rainlab.sitemap::lang.item.hourly
+            daily: rainlab.sitemap::lang.item.daily
+            weekly: rainlab.sitemap::lang.item.weekly
+            monthly: rainlab.sitemap::lang.item.monthly
+            yearly: rainlab.sitemap::lang.item.yearly
+            never: rainlab.sitemap::lang.item.never

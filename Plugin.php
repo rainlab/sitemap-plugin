@@ -18,8 +18,8 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Sitemap',
-            'description' => 'Generate a sitemap.xml file for your website.',
+            'name'        => 'rainlab.sitemap::lang.plugin.name',
+            'description' => 'rainlab.sitemap::lang.plugin.description',
             'author'      => 'Alexey Bobkov, Samuel Georges',
             'icon'        => 'icon-sitemap'
         ];
@@ -29,8 +29,8 @@ class Plugin extends PluginBase
     {
         return [
             'definitions' => [
-                'label'       => 'Sitemap',
-                'description' => 'Manage how the sitemap.xml file is generated.',
+                'label'       => 'rainlab.sitemap::lang.plugin.name',
+                'description' => 'rainlab.sitemap::lang.plugin.description',
                 'icon'        => 'icon-sitemap',
                 'url'         => Backend::url('rainlab/sitemap/definitions'),
                 'category'    => SettingsManager::CATEGORY_CMS,

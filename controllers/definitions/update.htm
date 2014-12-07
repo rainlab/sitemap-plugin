@@ -5,10 +5,10 @@
             <div class="scoreboard padded-container">
                 <div data-control="toolbar">
                     <div class="scoreboard-item title-value">
-                        <h4>Sitemap</h4>
+                        <h4><?= e(trans('rainlab.sitemap::lang.plugin.name')) ?></h4>
                         <p><?= e($themeName) ?></p>
                         <p class="description">
-                            Location: <a href="<?= $sitemapUrl ?>" target="_blank"><?= $sitemapUrl ?></a>
+                            <?= e(trans('rainlab.sitemap::lang.item.location')) ?> <a href="<?= $sitemapUrl ?>" target="_blank"><?= $sitemapUrl ?></a>
                         </p>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         data-hotkey="ctrl+s, cmd+s"
                         data-load-indicator="Saving Definition..."
                         class="btn btn-primary">
-                        <u>S</u>ave
+                        <?= e(trans('backend::lang.form.save')) ?>
                     </button>
                     <button
                         type="button"
@@ -39,7 +39,7 @@
                         data-request-confirm="Do you really want to empty this definition?">
                     </button>
                     <span class="btn-text">
-                        or <a href="<?= Backend::url('rainlab/sitemap/definitions') ?>">Cancel</a>
+                        <?= e(trans('backend::lang.form.or')) ?> <a href="<?= Backend::url('rainlab/sitemap/definitions') ?>"><?= e(trans('backend::lang.form.cancel')) ?></a>
                     </span>
                 </div>
             </div>
