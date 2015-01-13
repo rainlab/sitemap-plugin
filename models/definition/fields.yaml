@@ -8,5 +8,5 @@ tabs:
     fields:
         items:
             stretch: true
-            tab: Sitemap
+            tab: rainlab.sitemap::lang.plugin.name
             type: RainLab\Sitemap\FormWidgets\SitemapItems

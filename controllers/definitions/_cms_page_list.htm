@@ -13,8 +13,8 @@
                             <label for="checkboxAll"></label>
                         </div>
                     </th>
-                    <th><span>Page</span></th>
-                    <th><span>URL</span></th>
+                    <th><span><?= e(trans('rainlab.sitemap::lang.item.page')) ?></span></th>
+                    <th><span><?= e(trans('rainlab.sitemap::lang.item.url')) ?></span></th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@
                                     type="checkbox"
                                     name="cms_pages[]"
                                     value="<?= $page->getBaseFileName() ?>" />
-                                <label for="checkbox_<?= $page->getId() ?>">Check</label>
+                                <label for="checkbox_<?= $page->getId() ?>"><?= e(trans('rainlab.sitemap::lang.item.check')) ?></label>
                             </div>
                         </td>
                         <td><?= e($page->title) ?></td>

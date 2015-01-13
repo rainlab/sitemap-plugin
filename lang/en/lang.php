@@ -1,10 +1,21 @@
 <?php
 
 return [
-    'plugin_name' => 'Sitemap',
+    'plugin' => [
+        'name' => 'Sitemap',
+        'description' => 'Generate a sitemap.xml file for your website.'
+    ],
     'item' => [
+        'location' => 'Location:',
         'priority' => 'Priority',
         'changefreq' => 'Change frequency',
+        'always' => 'always',
+        'hourly' => 'hourly',
+        'daily' => 'daily',
+        'weekly' => 'weekly',
+        'monthly' => 'monthly',
+        'yearly' => 'yearly',
+        'never' => 'never',
         'editor_title' => 'Edit Sitemap Item',
         'type' => 'Type',
         'allow_nested_items' => 'Allow nested items',
@@ -21,5 +32,8 @@ return [
         'reference_required' => 'The item reference is required.',
         'url_required' => 'The URL is required',
         'cms_page_required' => 'Please select a CMS page',
-    ],
+        'page' => 'Page',
+        'url' => 'URL',
+        'check' => 'Check'
+    ]
 ];
