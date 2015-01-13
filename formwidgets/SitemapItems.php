@@ -78,7 +78,7 @@ class SitemapItems extends FormWidgetBase
     /**
      * {@inheritDoc}
      */
-    public function getSaveData($value)
+    public function getSaveValue($value)
     {
         return post('itemData');
     }
