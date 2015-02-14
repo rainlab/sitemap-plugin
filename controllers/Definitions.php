@@ -103,6 +103,6 @@ class Definitions extends Controller
     {
         $model = Definition::firstOrCreate(['theme' => $theme->getDirName()]);
         $updateUrl = sprintf('rainlab/sitemap/definitions/update/%s', $model->getKey());
-        return Redirect::to(Backend::url($updateUrl));
+        return Backend::redirect($updateUrl);
     }
 }
