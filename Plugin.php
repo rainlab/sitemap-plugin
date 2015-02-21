@@ -9,7 +9,6 @@ use System\Classes\SettingsManager;
  */
 class Plugin extends PluginBase
 {
-
     /**
      * Returns information about this plugin.
      *
@@ -21,7 +20,8 @@ class Plugin extends PluginBase
             'name'        => 'rainlab.sitemap::lang.plugin.name',
             'description' => 'rainlab.sitemap::lang.plugin.description',
             'author'      => 'Alexey Bobkov, Samuel Georges',
-            'icon'        => 'icon-sitemap'
+            'icon'        => 'icon-sitemap',
+            'homepage'    => 'https://github.com/rainlab/sitemap-plugin'
         ];
     }
 
@@ -33,9 +33,8 @@ class Plugin extends PluginBase
                 'description' => 'rainlab.sitemap::lang.plugin.description',
                 'icon'        => 'icon-sitemap',
                 'url'         => Backend::url('rainlab/sitemap/definitions'),
-                'category'    => SettingsManager::CATEGORY_CMS,
+                'category'    => SettingsManager::CATEGORY_CMS
             ]
         ];
     }
-
 }
