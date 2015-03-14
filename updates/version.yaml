@@ -3,3 +3,4 @@
     - Create definitions table
     - create_definitions_table.php
 1.0.3: Minor improvements to the code.
+1.0.4: Fixes issue where correct headers not being sent.

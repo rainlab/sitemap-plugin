@@ -18,7 +18,7 @@ class SitemapItems extends FormWidgetBase
     /**
      * {@inheritDoc}
      */
-    public $defaultAlias = 'sitemapitems';
+    protected $defaultAlias = 'sitemapitems';
 
     public $referenceRequiredMessage = 'rainlab.sitemap::lang.item.reference_required';
 
