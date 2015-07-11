@@ -22,7 +22,7 @@
         /*
          * Compact tab pane
          */
-        var $primaryPanel = $('.control-tabs.primary')
+        var $primaryPanel = $('.control-tabs.primary-tabs')
         $('.tab-pane', $primaryPanel).addClass('pane-compact')
     }
 
