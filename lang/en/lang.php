@@ -3,7 +3,10 @@
 return [
     'plugin' => [
         'name' => 'Sitemap',
-        'description' => 'Generate a sitemap.xml file for your website.'
+        'description' => 'Generate a sitemap.xml file for your website.',
+        'permissions' => [
+            'access_settings' => 'Access sitemap configuration settings',
+        ],
     ],
     'item' => [
         'location' => 'Location:',
