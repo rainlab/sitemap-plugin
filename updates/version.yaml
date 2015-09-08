@@ -5,3 +5,4 @@
 1.0.3: Minor improvements to the code.
 1.0.4: Fixes issue where correct headers not being sent.
 1.0.5: Minor back-end styling fix.
+1.0.6: Minor fix to internal API.

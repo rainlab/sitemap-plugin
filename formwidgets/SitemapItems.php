@@ -70,7 +70,7 @@ class SitemapItems extends FormWidgetBase
     /**
      * {@inheritDoc}
      */
-    public function loadAssets()
+    protected function loadAssets()
     {
         $this->addJs('js/sitemap-items-editor.js', 'core');
     }

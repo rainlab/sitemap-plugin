@@ -53,7 +53,7 @@ class Definition extends Model
      * @var array The sitemap items.
      * Items are objects of the \RainLab\Sitemap\Classes\DefinitionItem class.
      */
-    protected $items;
+    public $items;
 
     /**
      * @var DOMDocument element
