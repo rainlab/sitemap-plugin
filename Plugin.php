@@ -4,16 +4,8 @@ use Backend;
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
 
-/**
- * Sitemap Plugin Information File
- */
 class Plugin extends PluginBase
 {
-    /**
-     * Returns information about this plugin.
-     *
-     * @return array
-     */
     public function pluginDetails()
     {
         return [
@@ -22,16 +14,6 @@ class Plugin extends PluginBase
             'author'      => 'Alexey Bobkov, Samuel Georges',
             'icon'        => 'icon-sitemap',
             'homepage'    => 'https://github.com/rainlab/sitemap-plugin'
-        ];
-    }
-
-    public function registerPermissions()
-    {
-        return [
-            'rainlab.sitemap.access_settings' => [
-                'tab' => 'rainlab.sitemap::lang.plugin.name',
-                'label' => 'rainlab.sitemap::lang.plugin.permissions.access_settings',
-            ],
         ];
     }
 
@@ -44,7 +26,17 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-sitemap',
                 'url'         => Backend::url('rainlab/sitemap/definitions'),
                 'category'    => SettingsManager::CATEGORY_CMS,
-                'permissions' => ['rainlab.sitemap.access_settings'],
+                'permissions' => ['rainlab.sitemap.access_settings']
+            ]
+        ];
+    }
+
+    public function registerPermissions()
+    {
+        return [
+            'rainlab.sitemap.access_settings' => [
+                'tab'   => 'rainlab.sitemap::lang.plugin.name',
+                'label' => 'rainlab.sitemap::lang.plugin.permissions.access_settings'
             ]
         ];
     }
