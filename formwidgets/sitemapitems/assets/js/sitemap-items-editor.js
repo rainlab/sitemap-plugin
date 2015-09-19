@@ -117,11 +117,19 @@
 
             self.$treevView.treeView('update')
             self.$treevView.treeView('fixSubItems')
+
+            $container.removeClass('popover-highlight')
         })
 
         $container.popup({
             content: $('script[data-editor-template]', this.$el).html()
         })
+
+        /*
+         * Highlight modal target
+         */
+        $container.addClass('popover-highlight')
+        $container.blur()
 
         return false
     }
