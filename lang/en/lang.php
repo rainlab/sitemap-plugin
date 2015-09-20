@@ -6,7 +6,7 @@ return [
         'description' => 'Generate a sitemap.xml file for your website.',
         'permissions' => [
             'access_settings' => 'Access sitemap configuration settings',
-            'access_settings' => 'Access sitemap definitions page',
+            'access_definitions' => 'Access sitemap definitions page',
         ],
     ],
     'item' => [
