@@ -22,6 +22,8 @@ class Definitions extends Controller
         'Backend.Behaviors.FormController'
     ];
 
+    public $requiredPermissions = ['rainlab.sitemap.access_definitions'];
+
     public $formConfig = 'config_form.yaml';
 
     public function __construct()
