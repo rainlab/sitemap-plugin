@@ -37,7 +37,6 @@ return [
         'url_required' => 'The URL is required',
         'cms_page_required' => 'Please select a CMS page',
         'page' => 'Page',
-        'url' => 'URL',
         'check' => 'Check'
     ]
 ];
