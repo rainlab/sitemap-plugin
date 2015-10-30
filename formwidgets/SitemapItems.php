@@ -39,6 +39,7 @@ class SitemapItems extends FormWidgetBase
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('sitemapitems');
     }
 
@@ -90,7 +91,7 @@ class SitemapItems extends FormWidgetBase
     /**
      * Returns the item reference description.
      * @param \RainLab\Pages\Classes\SitemapItem $item Specifies the sitemap item
-     * @return string 
+     * @return string
      */
     protected function getReferenceDescription($item)
     {
@@ -106,8 +107,9 @@ class SitemapItems extends FormWidgetBase
             $result = $this->typeListCache[$item->type];
 
             if ($item->type !== 'url') {
-                if (isset($this->typeInfoCache[$item->type]['references']))
+                if (isset($this->typeInfoCache[$item->type]['references'])) {
                     $result .= ': '.$this->findReferenceName($item->reference, $this->typeInfoCache[$item->type]['references']);
+                }
             }
             else {
                 $result .= ': '.$item->url;
@@ -127,22 +129,24 @@ class SitemapItems extends FormWidgetBase
                 if ($reference == $search) {
                     $result = $this->getSitemapItemTitle($info);
 
-                    return strlen($path) ? $path.' / ' .$result : $result;
+                    return strlen($path) ? $path.' / '.$result : $result;
                 }
 
                 if (is_array($info) && isset($info['items'])) {
-                    $result = $iterator($info['items'], $path . ' / '.$this->getSitemapItemTitle($info));
+                    $result = $iterator($info['items'], $path.' / '.$this->getSitemapItemTitle($info));
 
                     if (strlen($result)) {
-                        return strlen($path) ? $path.' / ' .$result : $result;
+                        return strlen($path) ? $path.' / '.$result : $result;
                     }
                 }
             }
         };
 
         $result = $iterator($typeOptionList, null);
-        if (!strlen($result))
+
+        if (!strlen($result)) {
             $result = trans('rainlab.sitemap::lang.item.unnamed');
+        }
 
         $result = preg_replace('|^\s+\/|', '', $result);
 
@@ -152,8 +156,9 @@ class SitemapItems extends FormWidgetBase
     protected function getSitemapItemTitle($itemInfo)
     {
         if (is_array($itemInfo)) {
-            if (!array_key_exists('title', $itemInfo) || !strlen($itemInfo['title']))
+            if (!array_key_exists('title', $itemInfo) || !strlen($itemInfo['title'])) {
                 return trans('rainlab.sitemap::lang.item.unnamed');
+            }
 
             return $itemInfo['title'];
         }

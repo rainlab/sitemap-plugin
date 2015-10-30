@@ -13,7 +13,6 @@ use RainLab\Sitemap\Classes\DefinitionItem;
  */
 class Definition extends Model
 {
-
     /**
      * Maximum URLs allowed (Protocol limit is 50k)
      */
@@ -77,8 +76,9 @@ class Definition extends Model
 
     public function generateSitemap()
     {
-        if (!$this->items)
+        if (!$this->items) {
             return;
+        }
 
         $currentUrl = Request::path();
         $theme = Theme::load($this->theme);
@@ -87,13 +87,13 @@ class Definition extends Model
          * Cycle each page and add its URL
          */
         foreach ($this->items as $item) {
-
             /*
              * Explicit URL
              */
             if ($item->type == 'url') {
                 $this->addItemToSet($item, URL::to($item->url));
             }
+
             /*
              * Registered sitemap type
              */
@@ -101,12 +101,14 @@ class Definition extends Model
 
                 $apiResult = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $theme]);
 
-                if (!is_array($apiResult))
+                if (!is_array($apiResult)) {
                     continue;
+                }
 
                 foreach ($apiResult as $itemInfo) {
-                    if (!is_array($itemInfo))
+                    if (!is_array($itemInfo)) {
                         continue;
+                    }
 
                     /*
                      * Single item
@@ -119,7 +121,6 @@ class Definition extends Model
                      * Multiple items
                      */
                     if (isset($itemInfo['items'])) {
-
                         $parentItem = $item;
 
                         $itemIterator = function($items) use (&$itemIterator, $parentItem) {
@@ -137,21 +138,21 @@ class Definition extends Model
                         $itemIterator($itemInfo['items']);
                     }
                 }
-
             }
-
         }
 
         $urlSet = $this->makeUrlSet();
         $xml = $this->makeXmlObject();
         $xml->appendChild($urlSet);
+
         return $xml->saveXML();
     }
 
     protected function makeXmlObject()
     {
-        if ($this->xmlObject !== null)
+        if ($this->xmlObject !== null) {
             return $this->xmlObject;
+        }
 
         $xml = new DOMDocument;
         $xml->encoding = 'UTF-8';
@@ -161,8 +162,9 @@ class Definition extends Model
 
     protected function makeUrlSet()
     {
-        if ($this->urlSet !== null)
+        if ($this->urlSet !== null) {
             return $this->urlSet;
+        }
 
         $xml = $this->makeXmlObject();
         $urlSet = $xml->createElement('urlset');
@@ -175,8 +177,9 @@ class Definition extends Model
 
     protected function addItemToSet($item, $url, $mtime = null)
     {
-        if ($mtime instanceof \DateTime)
+        if ($mtime instanceof \DateTime) {
             $mtime = $mtime->getTimestamp();
+        }
 
         $xml = $this->makeXmlObject();
         $urlSet = $this->makeUrlSet();
@@ -199,8 +202,9 @@ class Definition extends Model
 
     protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority)
     {
-        if ($this->urlCount >= self::MAX_URLS)
+        if ($this->urlCount >= self::MAX_URLS) {
             return false;
+        }
 
         $this->urlCount++;
 
@@ -209,7 +213,7 @@ class Definition extends Model
         $url->appendChild($xml->createElement('lastmod', $lastModified));
         $url->appendChild($xml->createElement('changefreq', $frequency));
         $url->appendChild($xml->createElement('priority', $priority));
+
         return $url;
     }
-
 }
