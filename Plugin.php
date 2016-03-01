@@ -33,10 +33,6 @@ class Plugin extends PluginBase
     public function registerPermissions()
     {
         return [
-            'rainlab.sitemap.access_settings' => [
-                'tab' => 'rainlab.sitemap::lang.plugin.name',
-                'label' => 'rainlab.sitemap::lang.plugin.permissions.access_settings',
-            ],
             'rainlab.sitemap.access_definitions' => [
                 'tab' => 'rainlab.sitemap::lang.plugin.name',
                 'label' => 'rainlab.sitemap::lang.plugin.permissions.access_definitions',
@@ -58,7 +54,7 @@ class Plugin extends PluginBase
                 'icon'        => 'icon-sitemap',
                 'url'         => Backend::url('rainlab/sitemap/definitions'),
                 'category'    => SettingsManager::CATEGORY_CMS,
-                'permissions' => ['rainlab.sitemap.access_settings'],
+                'permissions' => ['rainlab.sitemap.access_definitions'],
             ]
         ];
     }
