@@ -2,7 +2,11 @@
 return [
     'plugin' => [
         'name' => 'Site Haritası',
-        'description' => 'Web sitenize sitemap.xml dosyası oluşturur.'
+        'description' => 'Web sitenize sitemap.xml dosyası oluşturur.',
+        'permissions' => [
+            'access_settings' => 'Site haritası ayarlarına erişim',
+            'access_definitions' => 'Site haritası tanımlamalarına erişim',
+        ],
     ],
     'item' => [
         'location' => 'Konum:',
@@ -32,7 +36,6 @@ return [
         'url_required' => 'URL alanı gereklidir.',
         'cms_page_required' => 'Lütfen bir CMS sayfası seçiniz.',
         'page' => 'Sayfa',
-        'url' => 'URL',
         'check' => 'Kontrol et'
     ]
 ];

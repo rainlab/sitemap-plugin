@@ -25,6 +25,11 @@ class Plugin extends PluginBase
         ];
     }
 
+    /**
+     * Registers administrator permissions for this plugin.
+     *
+     * @return array
+     */
     public function registerPermissions()
     {
         return [
@@ -32,9 +37,18 @@ class Plugin extends PluginBase
                 'tab' => 'rainlab.sitemap::lang.plugin.name',
                 'label' => 'rainlab.sitemap::lang.plugin.permissions.access_settings',
             ],
+            'rainlab.sitemap.access_definitions' => [
+                'tab' => 'rainlab.sitemap::lang.plugin.name',
+                'label' => 'rainlab.sitemap::lang.plugin.permissions.access_definitions',
+            ],
         ];
     }
 
+    /**
+     * Registers settings for this plugin.
+     *
+     * @return array
+     */
     public function registerSettings()
     {
         return [

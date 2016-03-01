@@ -6,6 +6,7 @@ return [
         'description' => 'Generate a sitemap.xml file for your website.',
         'permissions' => [
             'access_settings' => 'Access sitemap configuration settings',
+            'access_definitions' => 'Access sitemap definitions page',
         ],
     ],
     'item' => [
@@ -36,7 +37,6 @@ return [
         'url_required' => 'The URL is required',
         'cms_page_required' => 'Please select a CMS page',
         'page' => 'Page',
-        'url' => 'URL',
         'check' => 'Check'
     ]
 ];
