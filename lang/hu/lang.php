@@ -3,7 +3,11 @@
 return [
     'plugin' => [
         'name' => 'Oldaltérkép',
-        'description' => 'A weboldalhoz sitemap.xml fájl generálása.'
+        'description' => 'A weboldalhoz sitemap.xml fájl generálása.',
+        'permissions' => [
+            'access_settings' => 'Oldaltérkép kezelése',
+            'access_definitions' => 'Definíciós oldal kezelése',
+        ],
     ],
     'item' => [
         'location' => 'Hely:',
@@ -20,7 +24,7 @@ return [
         'type' => 'Típus',
         'allow_nested_items' => 'Engedélyezett elemek',
         'allow_nested_items_comment' => 'Nested items could be generated dynamically by static page and some other item types',
-        'url' => 'URL',
+        'url' => 'Webcím',
         'reference' => 'Hivatkozás',
         'title_required' => 'A cím megadása kötelező',
         'unknown_type' => 'Ismeretlen elem típus',
@@ -28,12 +32,11 @@ return [
         'add_item' => 'Hozzáadás',
         'new_item' => 'Új elem',
         'cms_page' => 'Oldal',
-        'cms_page_comment' => 'Select the page to use for the URL address.',
+        'cms_page_comment' => 'Válassza ki, hogy melyik oldal tartozik a fenti hivatkozáshoz.',
         'reference_required' => 'A hivatkozó elem megadása kötelező.',
-        'url_required' => 'Az URL cím megadása kötelező',
+        'url_required' => 'A webcím megadása kötelező',
         'cms_page_required' => 'Válasszon egy oldalt',
         'page' => 'Oldal',
-        'url' => 'URL',
         'check' => 'Ellenőrzés'
     ]
 ];
