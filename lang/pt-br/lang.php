@@ -36,7 +36,6 @@ return [
         'url_required' => 'A URL é obrigatória.',
         'cms_page_required' => 'Por favor, selecione uma página do CMS',
         'page' => 'Página',
-        'url' => 'URL',
         'check' => 'Checar'
     ]
 ];

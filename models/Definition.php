@@ -124,7 +124,8 @@ class Definition extends Model
 
                         $parentItem = $item;
 
-                        $itemIterator = function($items) use (&$itemIterator, $parentItem) {
+                        $itemIterator = function($items) use (&$itemIterator, $parentItem)
+                        {
                             foreach ($items as $item) {
                                 if (isset($item['url'])) {
                                     $this->addItemToSet($parentItem, $item['url'], array_get($item, 'mtime'));
