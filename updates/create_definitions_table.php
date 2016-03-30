@@ -5,7 +5,6 @@ use October\Rain\Database\Updates\Migration;
 
 class CreateDefinitionsTable extends Migration
 {
-
     public function up()
     {
         Schema::create('rainlab_sitemap_definitions', function($table)
@@ -22,5 +21,4 @@ class CreateDefinitionsTable extends Migration
     {
         Schema::dropIfExists('rainlab_sitemap_definitions');
     }
-
 }
