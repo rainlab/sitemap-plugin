@@ -33,7 +33,6 @@ return [
         'url_required' => 'Adres URL jest wymagany',
         'cms_page_required' => 'Wybierz stronę CMS',
         'page' => 'Strona',
-        'url' => 'URL',
         'check' => 'Sprawdź'
     ]
 ];
