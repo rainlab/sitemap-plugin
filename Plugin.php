@@ -34,7 +34,7 @@ class Plugin extends PluginBase
     {
         return [
             'rainlab.sitemap.access_definitions' => [
-                'tab' => 'rainlab.sitemap::lang.plugin.name',
+                'tab'   => 'rainlab.sitemap::lang.plugin.name',
                 'label' => 'rainlab.sitemap::lang.plugin.permissions.access_definitions',
             ],
         ];

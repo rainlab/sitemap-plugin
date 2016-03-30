@@ -5,6 +5,7 @@
 tabs:
     stretch: true
     cssClass: tabs-no-inset
+
     fields:
         items:
             stretch: true

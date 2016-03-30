@@ -135,8 +135,9 @@ class DefinitionItem
         $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$type]);
         if (is_array($apiResult)) {
             foreach ($apiResult as $typeInfo) {
-                if (!is_array($typeInfo))
+                if (!is_array($typeInfo)) {
                     continue;
+                }
 
                 foreach ($typeInfo as $name=>$value) {
                     if ($name == 'cmsPages') {
@@ -170,11 +171,11 @@ class DefinitionItem
     public function toArray()
     {
         $result = [];
+
         foreach ($this->fillable as $property) {
             $result[$property] = $this->$property;
         }
 
         return $result;
     }
-
 }

@@ -70,14 +70,14 @@ Array (
     [url] => http://example.com/blog/category/another-category
     [mtime] => Carbon::now(),
     [items] => Array (
-        [0] => Array  (
+        [0] => Array (
             [url] => http://example.com/blog/category/another-category
             [mtime] => Carbon::now(),
         )
 
         [1] => Array (
-                [url] => http://example.com/blog/category/news
-                [mtime] => Carbon::now(),
+            [url] => http://example.com/blog/category/news
+            [mtime] => Carbon::now(),
         )
     )
 )
