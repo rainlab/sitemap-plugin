@@ -80,6 +80,7 @@ class DefinitionItem
         }
 
         $result = [];
+
         foreach ($items as $itemData) {
             $obj = new self;
 
@@ -102,8 +103,8 @@ class DefinitionItem
     public function getTypeOptions($keyValue = null)
     {
         $result = ['url' => 'URL'];
-
         $apiResult = Event::fire('pages.menuitem.listTypes');
+
         if (is_array($apiResult)) {
             foreach ($apiResult as $typeList) {
                 if (!is_array($typeList)) {
@@ -133,6 +134,7 @@ class DefinitionItem
     {
         $result = [];
         $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$type]);
+
         if (is_array($apiResult)) {
             foreach ($apiResult as $typeInfo) {
                 if (!is_array($typeInfo)) {

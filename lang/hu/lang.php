@@ -34,8 +34,8 @@ return [
         'cms_page' => 'Oldal',
         'cms_page_comment' => 'Válassza ki, hogy melyik oldal tartozik a fenti hivatkozáshoz.',
         'reference_required' => 'A hivatkozó elem megadása kötelező.',
-        'url_required' => 'A webcím megadása kötelező',
-        'cms_page_required' => 'Válasszon egy oldalt',
+        'url_required' => 'A webcím megadása kötelező.',
+        'cms_page_required' => 'Válasszon egy oldalt.',
         'page' => 'Oldal',
         'check' => 'Ellenőrzés'
     ]
