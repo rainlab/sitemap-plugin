@@ -36,7 +36,6 @@ return [
         'url_required' => 'URL adresa je povinná',
         'cms_page_required' => 'Vyberte prosím CMS stránku',
         'page' => 'Stránka',
-        'url' => 'URL',
         'check' => 'Zkontrolovat'
     ]
 ];
