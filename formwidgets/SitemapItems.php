@@ -39,6 +39,7 @@ class SitemapItems extends FormWidgetBase
     public function render()
     {
         $this->prepareVars();
+
         return $this->makePartial('sitemapitems');
     }
 
@@ -103,7 +104,7 @@ class SitemapItems extends FormWidgetBase
         }
 
         if (isset($this->typeInfoCache[$item->type])) {
-            $result = $this->typeListCache[$item->type];
+            $result = trans($this->typeListCache[$item->type]);
 
             if ($item->type !== 'url') {
                 if (isset($this->typeInfoCache[$item->type]['references']))
@@ -122,27 +123,29 @@ class SitemapItems extends FormWidgetBase
 
     protected function findReferenceName($search, $typeOptionList)
     {
-        $iterator = function($optionList, $path) use ($search, &$iterator) {
+        $iterator = function($optionList, $path) use ($search, &$iterator)
+        {
             foreach ($optionList as $reference => $info) {
                 if ($reference == $search) {
                     $result = $this->getSitemapItemTitle($info);
 
-                    return strlen($path) ? $path.' / ' .$result : $result;
+                    return strlen($path) ? $path.' / '.$result : $result;
                 }
 
                 if (is_array($info) && isset($info['items'])) {
-                    $result = $iterator($info['items'], $path . ' / '.$this->getSitemapItemTitle($info));
+                    $result = $iterator($info['items'], $path.' / '.$this->getSitemapItemTitle($info));
 
                     if (strlen($result)) {
-                        return strlen($path) ? $path.' / ' .$result : $result;
+                        return strlen($path) ? $path.' / '.$result : $result;
                     }
                 }
             }
         };
 
         $result = $iterator($typeOptionList, null);
-        if (!strlen($result))
+        if (!strlen($result)) {
             $result = trans('rainlab.sitemap::lang.item.unnamed');
+        }
 
         $result = preg_replace('|^\s+\/|', '', $result);
 
@@ -152,8 +155,9 @@ class SitemapItems extends FormWidgetBase
     protected function getSitemapItemTitle($itemInfo)
     {
         if (is_array($itemInfo)) {
-            if (!array_key_exists('title', $itemInfo) || !strlen($itemInfo['title']))
+            if (!array_key_exists('title', $itemInfo) || !strlen($itemInfo['title'])) {
                 return trans('rainlab.sitemap::lang.item.unnamed');
+            }
 
             return $itemInfo['title'];
         }
