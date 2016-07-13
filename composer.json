@@ -1,0 +1,21 @@
+{
+    "name": "rainlab/sitemap-plugin",
+    "type": "october-plugin",
+    "description": "Sitemap plugin for October CMS",
+    "homepage": "https://octobercms.com/plugin/rainlab-sitemap",
+    "keywords": ["october", "octobercms", "sitemap"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexey Bobkov",
+            "email": "aleksey.bobkov@gmail.com",
+            "role": "Co-founder"
+        },
+        {
+            "name": "Samuel Georges",
+            "email": "daftspunky@gmail.com",
+            "role": "Co-founder"
+        }
+    ],
+    "minimum-stability": "dev"
+}
