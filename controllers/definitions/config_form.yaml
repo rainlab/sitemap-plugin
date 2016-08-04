@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: Definition
+name: rainlab.sitemap::lang.item.definition
 
 # Model Form Field configuration
 form: $/rainlab/sitemap/models/definition/fields.yaml
@@ -16,6 +16,6 @@ defaultRedirect: system/settings
 
 # Update page
 update:
-    title: Manage sitemap
+    title: rainlab.sitemap::lang.plugin.name
     redirect: rainlab/sitemap/definitions
     redirectClose: system/settings
