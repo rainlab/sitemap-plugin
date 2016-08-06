@@ -35,8 +35,8 @@
                         type="button"
                         class="oc-icon-trash-o btn-icon danger pull-right"
                         data-request="onDelete"
-                        data-load-indicator="Emptying Definition..."
-                        data-request-confirm="Do you really want to empty this definition?">
+                        data-load-indicator="<?= e(trans('rainlab.sitemap::lang.item.load_indicator')) ?>"
+                        data-request-confirm="<?= e(trans('rainlab.sitemap::lang.item.empty_confirm')) ?>">
                     </button>
                     <span class="btn-text">
                         <?= e(trans('backend::lang.form.or')) ?> <a href="<?= Backend::url('rainlab/sitemap/definitions') ?>"><?= e(trans('backend::lang.form.cancel')) ?></a>
@@ -51,7 +51,7 @@
 
     <div class="padded-container">
         <p class="flash-message static error"><?= e(trans($this->fatalError)) ?></p>
-        <p><a href="<?= Backend::url('system/settings') ?>" class="btn btn-default">Return to settings</a></p>
+        <p><a href="<?= Backend::url('system/settings') ?>" class="btn btn-default"><?= e(trans('system::lang.settings.return')) ?></a></p>
     </div>
 
 <?php endif ?>

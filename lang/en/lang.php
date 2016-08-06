@@ -37,6 +37,9 @@ return [
         'url_required' => 'The URL is required',
         'cms_page_required' => 'Please select a CMS page',
         'page' => 'Page',
-        'check' => 'Check'
+        'check' => 'Check',
+        'definition' => 'Definition',
+        'load_indicator' => 'Emptying Definition...',
+        'empty_confirm' => 'Empty this definition?'
     ]
 ];

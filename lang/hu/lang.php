@@ -37,6 +37,9 @@ return [
         'url_required' => 'A webcím megadása kötelező.',
         'cms_page_required' => 'Válasszon egy oldalt.',
         'page' => 'Oldal',
-        'check' => 'Ellenőrzés'
+        'check' => 'Ellenőrzés',
+        'definition' => 'Definíció',
+        'load_indicator' => 'Visszaállítás folyamatban...',
+        'empty_confirm' => 'Állítsuk vissza üres állapotba?'
     ]
 ];
