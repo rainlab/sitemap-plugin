@@ -1,6 +1,6 @@
 <?php namespace RainLab\Sitemap\Models;
 
-use URL;
+use Url;
 use Model;
 use Event;
 use Request;
@@ -92,7 +92,7 @@ class Definition extends Model
              * Explicit URL
              */
             if ($item->type == 'url') {
-                $this->addItemToSet($item, URL::to($item->url));
+                $this->addItemToSet($item, Url::to($item->url));
             }
             /*
              * Registered sitemap type
