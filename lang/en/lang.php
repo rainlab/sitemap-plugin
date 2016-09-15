@@ -39,6 +39,7 @@ return [
         'page' => 'Page',
         'check' => 'Check',
         'definition' => 'Definition',
+        'save_definition' => 'Saving Definition...',
         'load_indicator' => 'Emptying Definition...',
         'empty_confirm' => 'Empty this definition?'
     ]

@@ -5,8 +5,8 @@ return [
         'name' => 'Oldaltérkép',
         'description' => 'A weboldalhoz sitemap.xml fájl generálása.',
         'permissions' => [
-            'access_settings' => 'Oldaltérkép kezelése',
-            'access_definitions' => 'Definíciós oldal kezelése',
+            'access_settings' => 'Oldaltérkép beállításainak kezelése',
+            'access_definitions' => 'Oldaltérkép elemeinek kezelése',
         ],
     ],
     'item' => [
@@ -22,8 +22,8 @@ return [
         'never' => 'soha',
         'editor_title' => 'Módosítás',
         'type' => 'Típus',
-        'allow_nested_items' => 'Engedélyezett elemek',
-        'allow_nested_items_comment' => 'Nested items could be generated dynamically by static page and some other item types',
+        'allow_nested_items' => 'Allapok megjelenítése',
+        'allow_nested_items_comment' => 'A kapcsolódó lapok automatikus listázása, amennyiben támogatott ez a funkció.',
         'url' => 'Webcím',
         'reference' => 'Hivatkozás',
         'title_required' => 'A cím megadása kötelező',
@@ -38,7 +38,8 @@ return [
         'cms_page_required' => 'Válasszon egy oldalt.',
         'page' => 'Oldal',
         'check' => 'Ellenőrzés',
-        'definition' => 'Definíció',
+        'definition' => 'Oldaltérkép',
+        'save_definition' => 'Oldaltérkép mentése...',
         'load_indicator' => 'Visszaállítás folyamatban...',
         'empty_confirm' => 'Állítsuk vissza üres állapotba?'
     ]
