@@ -5,7 +5,8 @@ return [
         'name' => 'Sitemap',
         'description' => 'Gera o arquivo sitemap.xml para seu site.',
         'permissions' => [
-            'access_settings' => 'Acesso as definições de configuração so sitemap',
+            'access_settings' => 'Acessar as definições de configuração so sitemap',
+            'access_definitions' => 'Acessar a página de definições do sitemap',
         ],
     ],
     'item' => [
@@ -36,6 +37,10 @@ return [
         'url_required' => 'A URL é obrigatória.',
         'cms_page_required' => 'Por favor, selecione uma página do CMS',
         'page' => 'Página',
-        'check' => 'Checar'
+        'check' => 'Checar',
+        'definition' => 'Definição',
+        'save_definition' => 'Salvando Definição...',
+        'load_indicator' => 'Limpando Definição...',
+        'empty_confirm' => 'Limpar esta definição?'
     ]
 ];
