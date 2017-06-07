@@ -42,5 +42,8 @@ return [
         'save_definition' => 'Saving Definition...',
         'load_indicator' => 'Emptying Definition...',
         'empty_confirm' => 'Empty this definition?'
+    ],
+    'definition' => [
+        'not_found' => 'No sitemap definition was found. Try creating one first.'
     ]
 ];
