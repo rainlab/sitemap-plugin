@@ -10,7 +10,7 @@ return [
         ],
     ],
     'item' => [
-        'location' => 'Hely:',
+        'location' => 'Cím:',
         'priority' => 'Prioritás',
         'changefreq' => 'Gyakoriság',
         'always' => 'mindig',
@@ -38,9 +38,12 @@ return [
         'cms_page_required' => 'Válasszon egy oldalt.',
         'page' => 'Oldal',
         'check' => 'Ellenőrzés',
-        'definition' => 'Oldaltérkép',
-        'save_definition' => 'Oldaltérkép mentése...',
+        'definition' => 'Elemek',
+        'save_definition' => 'Mentés...',
         'load_indicator' => 'Visszaállítás folyamatban...',
         'empty_confirm' => 'Állítsuk vissza üres állapotba?'
+    ],
+    'definition' => [
+        'not_found' => 'Nincs elkészítve az oldaltérkép. Adjon hozzá legalább egy elemet.'
     ]
 ];

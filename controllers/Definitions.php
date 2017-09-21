@@ -1,6 +1,6 @@
 <?php namespace RainLab\Sitemap\Controllers;
 
-use URL;
+use Url;
 use Backend;
 use Request;
 use Redirect;
@@ -81,7 +81,7 @@ class Definitions extends Controller
 
             $this->vars['theme'] = $theme;
             $this->vars['themeName'] = $theme->getConfigValue('name', $theme->getDirName());
-            $this->vars['sitemapUrl'] = URL::to('/sitemap.xml');
+            $this->vars['sitemapUrl'] = Url::to('/sitemap.xml');
 
             return $result;
         }

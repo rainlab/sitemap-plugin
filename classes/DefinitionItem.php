@@ -100,7 +100,7 @@ class DefinitionItem
      * Returns a list of registered item types
      * @return array Returns an array of registered item types
      */
-    public function getTypeOptions($keyValue = null)
+    public function getTypeOptions()
     {
         $result = ['url' => 'URL'];
         $apiResult = Event::fire('pages.menuitem.listTypes');
@@ -120,12 +120,12 @@ class DefinitionItem
         return $result;
     }
 
-    public function getCmsPageOptions($keyValue = null)
+    public function getCmsPageOptions()
     {
         return []; // CMS Pages are loaded client-side
     }
 
-    public function getReferenceOptions($keyValue = null)
+    public function getReferenceOptions()
     {
         return []; // References are loaded client-side
     }
