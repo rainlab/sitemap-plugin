@@ -6,6 +6,7 @@ return [
         'description' => 'Generuje soubor sitemap.xml pro vaše stránky.',
         'permissions' => [
             'access_settings' => 'Povolit nastavení mapy stránek',
+            'access_definitions' => 'Povolit zobrazení definice mapy stránek', // aaa
         ],
     ],
     'item' => [
@@ -36,6 +37,13 @@ return [
         'url_required' => 'URL adresa je povinná',
         'cms_page_required' => 'Vyberte prosím CMS stránku',
         'page' => 'Stránka',
-        'check' => 'Zkontrolovat'
-    ]
+        'check' => 'Zkontrolovat',
+        'definition' => 'Definice',
+        'save_definition' => 'Ukládám mapu stránek...',
+        'load_indicator' => 'Mažu definici...',
+        'empty_confirm' => 'Opravdu chcete smazat definici mapy stránek?',
+    ],
+    'definition' => [
+        'not_found' => 'Žádná sitemap nebyla nalezena. Zkuste nejdříve nějakou vytvořit.',
+    ],
 ];
