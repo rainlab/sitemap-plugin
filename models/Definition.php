@@ -99,13 +99,19 @@ class Definition extends Model
              */
             else {
 
-                $apiResult = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $theme]);
-
-                if (!is_array($apiResult)) {
-                    continue;
+                if (class_exists('\RainLab\Translate\Classes\Translator')){
+                    $translator = \RainLab\Translate\Classes\Translator::instance();
+                    $enabledLocales = \RainLab\Translate\Models\Locale::listEnabled();
+                } else {
+                    $enabledLocales = array('' => '');
                 }
 
-                foreach ($apiResult as $itemInfo) {
+                foreach ($enabledLocales as $locale => $nothing) {
+
+                    if (!empty($locale)) $translator->setlocale($locale, false);
+
+                    $itemInfo = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $theme], true);
+
                     if (!is_array($itemInfo)) {
                         continue;
                     }
