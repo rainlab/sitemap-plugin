@@ -1,11 +1,13 @@
 <?php namespace RainLab\Sitemap\Models;
 
 use Url;
+use Cms;
 use Model;
 use Event;
 use Request;
 use DOMDocument;
 use Cms\Classes\Theme;
+use Cms\Classes\Page;
 use RainLab\Sitemap\Classes\DefinitionItem;
 
 /**
@@ -83,6 +85,15 @@ class Definition extends Model
         $currentUrl = Request::path();
         $theme = Theme::load($this->theme);
 
+        if (class_exists('\RainLab\Translate\Classes\Translator')){
+            $translator = \RainLab\Translate\Classes\Translator::instance();
+            $defaultLocale = \RainLab\Translate\Models\Locale::getDefault()->code;
+            $alternateLocales = array_keys(array_except(\RainLab\Translate\Models\Locale::listEnabled(), $defaultLocale));
+            $translator->setLocale($defaultLocale, false);
+        } else {
+            $alternateLocales = [];
+        }
+
         /*
          * Cycle each page and add its URL
          */
@@ -114,7 +125,18 @@ class Definition extends Model
                      * Single item
                      */
                     if (isset($itemInfo['url'])) {
-                        $this->addItemToSet($item, $itemInfo['url'], array_get($itemInfo, 'mtime'));
+                        $alternateLocaleUrls = [];
+                        if ($item->type = 'cms-page') {
+                            foreach ($alternateLocales as $locale) {
+                                $page = Page::loadCached($theme, $item->reference);
+                                if ($page->hasTranslatablePageUrl($locale)) {
+                                    $page->rewriteTranslatablePageUrl($locale);
+                                }
+                                $pageUrl = $translator->getPathInLocale($page->url, $locale);
+                                $alternateLocaleUrls[$locale] = Cms::url($pageUrl);
+                            }
+                        }
+                        $this->addItemToSet($item, $itemInfo['url'], array_get($itemInfo, 'mtime'), $alternateLocaleUrls);
                     }
 
                     /*
@@ -173,13 +195,14 @@ class Definition extends Model
         $xml = $this->makeXmlObject();
         $urlSet = $xml->createElement('urlset');
         $urlSet->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+        $urlSet->setAttribute('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
         $urlSet->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $urlSet->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 
         return $this->urlSet = $urlSet;
     }
 
-    protected function addItemToSet($item, $url, $mtime = null)
+    protected function addItemToSet($item, $url, $mtime = null, $alternateLocaleUrls = [])
     {
         if ($mtime instanceof \DateTime) {
             $mtime = $mtime->getTimestamp();
@@ -194,7 +217,8 @@ class Definition extends Model
             $url,
             $mtime,
             $item->changefreq,
-            $item->priority
+            $item->priority,
+            $alternateLocaleUrls
         );
 
         if ($urlElement) {
@@ -204,7 +228,7 @@ class Definition extends Model
         return $urlSet;
     }
 
-    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority)
+    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority, $alternateLocaleUrls)
     {
         if ($this->urlCount >= self::MAX_URLS) {
             return false;
@@ -217,6 +241,13 @@ class Definition extends Model
         $url->appendChild($xml->createElement('lastmod', $lastModified));
         $url->appendChild($xml->createElement('changefreq', $frequency));
         $url->appendChild($xml->createElement('priority', $priority));
+        foreach ($alternateLocaleUrls as $locale => $locale_url) {
+            $alternateUrl = $xml->createElement('xhtml:link');
+            $alternateUrl->setAttribute('rel', 'alternate');
+            $alternateUrl->setAttribute('hreflang', $locale);
+            $alternateUrl->setAttribute('href', $locale_url);
+            $url->appendChild($alternateUrl);
+        }
 
         return $url;
     }
