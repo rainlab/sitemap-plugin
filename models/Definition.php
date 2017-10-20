@@ -127,7 +127,7 @@ class Definition extends Model
                     if (isset($itemInfo['url'])) {
                         $url = $itemInfo['url'];
                         $alternateLocaleUrls = [];
-                        if ($item->type = 'cms-page' && count($alternateLocales)) {
+                        if ($item->type == 'cms-page' && count($alternateLocales)) {
                             $page = Page::loadCached($theme, $item->reference);
                             if ($page->hasTranslatablePageUrl($defaultLocale)) {
                                 $page->rewriteTranslatablePageUrl($defaultLocale);
