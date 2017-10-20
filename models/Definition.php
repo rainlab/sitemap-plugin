@@ -85,13 +85,12 @@ class Definition extends Model
         $currentUrl = Request::path();
         $theme = Theme::load($this->theme);
 
+        $alternateLocales = [];
         if (class_exists('\RainLab\Translate\Classes\Translator')){
             $translator = \RainLab\Translate\Classes\Translator::instance();
             $defaultLocale = \RainLab\Translate\Models\Locale::getDefault()->code;
             $alternateLocales = array_keys(array_except(\RainLab\Translate\Models\Locale::listEnabled(), $defaultLocale));
             $translator->setLocale($defaultLocale, false);
-        } else {
-            $alternateLocales = [];
         }
 
         /*
@@ -140,6 +139,9 @@ class Definition extends Model
                                 $alternateLocaleUrls[$locale] = Cms::url($translator->getPathInLocale($page->url, $locale));
                             }
                         }
+                        if (isset($itemInfo['alternate_locale_urls'])) {
+                            $alternateLocaleUrls = $itemInfo['alternate_locale_urls'];
+                        }
                         $this->addItemToSet($item, $url, array_get($itemInfo, 'mtime'), $alternateLocaleUrls);
                     }
 
@@ -154,7 +156,11 @@ class Definition extends Model
                         {
                             foreach ($items as $item) {
                                 if (isset($item['url'])) {
-                                    $this->addItemToSet($parentItem, $item['url'], array_get($item, 'mtime'));
+                                    $alternateLocaleUrls = [];
+                                    if (isset($item['alternate_locale_urls'])) {
+                                        $alternateLocaleUrls = $item['alternate_locale_urls'];
+                                    }
+                                    $this->addItemToSet($parentItem, $item['url'], array_get($item, 'mtime'), $alternateLocaleUrls);
                                 }
 
                                 if (isset($item['items'])) {
