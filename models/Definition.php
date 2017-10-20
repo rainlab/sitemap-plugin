@@ -125,18 +125,22 @@ class Definition extends Model
                      * Single item
                      */
                     if (isset($itemInfo['url'])) {
+                        $url = $itemInfo['url'];
                         $alternateLocaleUrls = [];
-                        if ($item->type = 'cms-page') {
+                        if ($item->type = 'cms-page' && count($alternateLocales)) {
+                            $page = Page::loadCached($theme, $item->reference);
+                            if ($page->hasTranslatablePageUrl($defaultLocale)) {
+                                $page->rewriteTranslatablePageUrl($defaultLocale);
+                            }
+                            $url = Cms::url($translator->getPathInLocale($page->url, $defaultLocale));
                             foreach ($alternateLocales as $locale) {
-                                $page = Page::loadCached($theme, $item->reference);
                                 if ($page->hasTranslatablePageUrl($locale)) {
                                     $page->rewriteTranslatablePageUrl($locale);
                                 }
-                                $pageUrl = $translator->getPathInLocale($page->url, $locale);
-                                $alternateLocaleUrls[$locale] = Cms::url($pageUrl);
+                                $alternateLocaleUrls[$locale] = Cms::url($translator->getPathInLocale($page->url, $locale));
                             }
                         }
-                        $this->addItemToSet($item, $itemInfo['url'], array_get($itemInfo, 'mtime'), $alternateLocaleUrls);
+                        $this->addItemToSet($item, $url, array_get($itemInfo, 'mtime'), $alternateLocaleUrls);
                     }
 
                     /*
