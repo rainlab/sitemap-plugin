@@ -6,6 +6,7 @@ use Model;
 use Event;
 use Request;
 use DOMDocument;
+use Config;
 use Cms\Classes\Theme;
 use Cms\Classes\Page;
 use RainLab\Sitemap\Classes\DefinitionItem;
@@ -128,8 +129,10 @@ class Definition extends Model
                         $alternateLocaleUrls = [];
                         if ($item->type == 'cms-page' && count($alternateLocales)) {
                             $page = Page::loadCached($theme, $item->reference);
-                            if ($page->hasTranslatablePageUrl($defaultLocale)) {
-                                $page->rewriteTranslatablePageUrl($defaultLocale);
+                            if (Config::get('rainlab.translate::prefixDefaultLocale')) {
+                                if ($page->hasTranslatablePageUrl($defaultLocale)) {
+                                    $page->rewriteTranslatablePageUrl($defaultLocale);
+                                }
                             }
                             $url = Cms::url($translator->getPathInLocale($page->url, $defaultLocale));
                             foreach ($alternateLocales as $locale) {
