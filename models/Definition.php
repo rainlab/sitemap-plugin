@@ -90,7 +90,7 @@ class Definition extends Model
         if (class_exists('\RainLab\Translate\Classes\Translator')){
             $translator = \RainLab\Translate\Classes\Translator::instance();
             $defaultLocale = \RainLab\Translate\Models\Locale::getDefault()->code;
-            $alternateLocales = array_keys(array_except(\RainLab\Translate\Models\Locale::listEnabled(), $defaultLocale));
+            $alternateLocales = array_keys(\RainLab\Translate\Models\Locale::listEnabled());
             $translator->setLocale($defaultLocale, false);
         }
 
@@ -129,10 +129,8 @@ class Definition extends Model
                         $alternateLocaleUrls = [];
                         if ($item->type == 'cms-page' && count($alternateLocales)) {
                             $page = Page::loadCached($theme, $item->reference);
-                            if (Config::get('rainlab.translate::prefixDefaultLocale')) {
-                                if ($page->hasTranslatablePageUrl($defaultLocale)) {
-                                    $page->rewriteTranslatablePageUrl($defaultLocale);
-                                }
+                            if ($page->hasTranslatablePageUrl($defaultLocale)) {
+                                $page->rewriteTranslatablePageUrl($defaultLocale);
                             }
                             $url = Cms::url($translator->getPathInLocale($page->url, $defaultLocale));
                             foreach ($alternateLocales as $locale) {
@@ -225,23 +223,37 @@ class Definition extends Model
         $urlSet = $this->makeUrlSet();
         $mtime = $mtime ? date('c', $mtime) : date('c');
 
-        $urlElement = $this->makeUrlElement(
-            $xml,
-            $url,
-            $mtime,
-            $item->changefreq,
-            $item->priority,
-            $alternateLocaleUrls
-        );
-
-        if ($urlElement) {
-            $urlSet->appendChild($urlElement);
+        if ($alternateLocaleUrls) {
+            foreach ($alternateLocaleUrls as $alternateLocaleUrl) {
+                $urlElement = $this->makeUrlElement(
+                    $xml,
+                    $alternateLocaleUrl,
+                    $mtime,
+                    $item->changefreq,
+                    $item->priority,
+                    $alternateLocaleUrls
+                );
+                if ($urlElement) {
+                    $urlSet->appendChild($urlElement);
+                }
+            }
+        } else {
+            $urlElement = $this->makeUrlElement(
+                $xml,
+                $url,
+                $mtime,
+                $item->changefreq,
+                $item->priority
+            );
+            if ($urlElement) {
+                $urlSet->appendChild($urlElement);
+            }
         }
 
         return $urlSet;
     }
 
-    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority, $alternateLocaleUrls)
+    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority, $alternateLocaleUrls = [])
     {
         if ($this->urlCount >= self::MAX_URLS) {
             return false;
