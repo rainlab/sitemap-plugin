@@ -139,9 +139,9 @@ class CustomItemTypes extends \October\Rain\Extension\ExtensionBase
 
         $items = new $this->parent;
 
-        if(isset($itemType['scope']))
+        if($scope)
         {
-            $items = $items->isVisible();
+            $items = $items->$scope();
         }
 
         $items = $items->orderBy('title')->get();
