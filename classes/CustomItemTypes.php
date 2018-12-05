@@ -6,6 +6,28 @@ use Cms\Classes\Page as CmsPage;
 use Symfony\Component\Yaml\Yaml;
 use Cms\Classes\Theme;
 
+/*
+
+    How to use:
+
+    Add the following lines to your model:
+    
+    public $itemTypeConfig = '/{author}/{plugin}/models/{model}/config_itemtypes.yaml';
+    public $implment = [
+        'RainLab.Sitemap.Classes.CustomItemTypes'
+    ];
+
+    ItemTypes.yaml:
+
+    apartment:
+      component: apartment <-- Component name
+      paramName: slug <-- Paramname on page
+      slug: slug <-- Model Slug
+      scope: isVisible <-- Custom Scope (optional)
+      dynamic: false
+
+*/
+
 class CustomItemTypes extends \October\Rain\Extension\ExtensionBase
 {
     protected $parent;
