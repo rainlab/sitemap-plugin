@@ -1,4 +1,5 @@
 <?php
+
 return [
     'plugin' => [
         'name' => 'Site Haritası',
@@ -36,6 +37,13 @@ return [
         'url_required' => 'URL alanı gereklidir.',
         'cms_page_required' => 'Lütfen bir CMS sayfası seçiniz.',
         'page' => 'Sayfa',
-        'check' => 'Kontrol et'
-    ]
+        'check' => 'Kontrol et',
+        'definition' => 'Tanımlama',
+        'save_definition' => 'Tanımlama Kaydediliyor...',
+        'load_indicator' => 'Tanımlama Boşaltılıyor...',
+        'empty_confirm' => 'Tanımlama boşaltılsın mı?'
+    ],
+    'definition' => [
+        'not_found' => 'Site haritası tanımlaması bulunamadı. Hemen bir tane oluşturun.',
+    ],
 ];
