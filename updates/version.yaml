@@ -8,4 +8,6 @@
 1.0.6: Minor fix to internal API.
 1.0.7: Added access premissions.
 1.0.8: Minor styling updates.
-
+1.0.9:
+    - Replaced the 500 error with 404 when no definition is found.
+    - Improved the cs, hu, tr and pt-br translations.
