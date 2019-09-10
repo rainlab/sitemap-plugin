@@ -1,15 +1,17 @@
-<?php
-
-return [
+<?php return [
     'plugin' => [
         'name' => 'Mapa strony',
-        'description' => 'Generuje plik sitemap.xml dla Twojej strony.'
+        'description' => 'Generuje plik sitemap.xml dla Twojej strony.',
+        'permissions' => [
+            'access_settings' => 'Zarządzaj ustawieniami wtyczki',
+            'access_definitions' => 'Zarządzaj definicją mapy strony',
+        ],
     ],
     'item' => [
         'location' => 'Lokacja:',
         'priority' => 'Priorytet',
-        'changefreq' => 'Zmień częstotliwość',
-        'always' => 'zawsze',
+        'changefreq' => 'Częstotliwość zmian',
+        'always' => 'cały czas',
         'hourly' => 'co godzinę',
         'daily' => 'codziennie',
         'weekly' => 'co tydzień',
@@ -28,11 +30,18 @@ return [
         'add_item' => 'Dodaj <u>P</u>ozycję',
         'new_item' => 'Nowa pozycja',
         'cms_page' => 'Strona CMS',
-        'cms_page_comment' => 'Wybierz stronę, której adres URL chcesz wstawić.',
+        'cms_page_comment' => 'Wybierz stronę, której adres URL chcesz umieścić.',
         'reference_required' => 'Odnośnik dla pozycji jest wymagany.',
         'url_required' => 'Adres URL jest wymagany',
         'cms_page_required' => 'Wybierz stronę CMS',
         'page' => 'Strona',
-        'check' => 'Sprawdź'
-    ]
+        'check' => 'Sprawdź',
+        'definition' => 'Definicje',
+        'save_definition' => 'Zapisywanie definicji...',
+        'load_indicator' => 'Czyszczenie definicji...',
+        'empty_confirm' => 'Wyczyścić tą definicję?',
+    ],
+    'definition' => [
+        'not_found' => 'Nie znaleziono definicji mapy strony. Musisz ją utworzyć.',
+    ],
 ];
