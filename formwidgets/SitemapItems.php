@@ -61,7 +61,7 @@ class SitemapItems extends FormWidgetBase
 
         $this->vars['emptyItem'] = $emptyItem;
 
-        $widgetConfig = $this->makeConfig('~/plugins/rainlab/sitemap/classes/definitionitem/fields.yaml');
+        $widgetConfig = $this->makeConfig('$/rainlab/sitemap/classes/definitionitem/fields.yaml');
         $widgetConfig->model = $sitemapItem;
         $widgetConfig->alias = $this->alias.'SitemapItem';
 
