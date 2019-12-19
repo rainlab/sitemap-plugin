@@ -103,7 +103,7 @@ class SitemapItems extends FormWidgetBase
             $this->typeInfoCache[$item->type] = SitemapItem::getTypeInfo($item->type);
         }
 
-        if (isset($this->typeInfoCache[$item->type])) {
+        if (isset($this->typeListCache[$item->type])) {
             $result = trans($this->typeListCache[$item->type]);
 
             if ($item->type !== 'url') {
