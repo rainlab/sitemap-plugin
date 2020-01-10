@@ -92,7 +92,7 @@ class Definition extends Model
              * Explicit URL
              */
             if ($item->type == 'url') {
-                $this->addItemToSet($item, Url::to($item->url));
+                $this->addItemToSet($item);
             }
             /*
              * Registered sitemap type
@@ -114,7 +114,7 @@ class Definition extends Model
                      * Single item
                      */
                     if (isset($itemInfo['url'])) {
-                        $this->addItemToSet($item, $itemInfo['url'], array_get($itemInfo, 'mtime'));
+                        $this->addItemToSet($item, $itemInfo);
                     }
 
                     /*
@@ -128,7 +128,7 @@ class Definition extends Model
                         {
                             foreach ($items as $item) {
                                 if (isset($item['url'])) {
-                                    $this->addItemToSet($parentItem, $item['url'], array_get($item, 'mtime'));
+                                    $this->addItemToSet($parentItem, $item);
                                 }
 
                                 if (isset($item['items'])) {
@@ -148,6 +148,7 @@ class Definition extends Model
         $urlSet = $this->makeUrlSet();
         $xml = $this->makeXmlObject();
         $xml->appendChild($urlSet);
+        $xml->formatOutput = true;
 
         return $xml->saveXML();
     }
@@ -179,10 +180,21 @@ class Definition extends Model
         return $this->urlSet = $urlSet;
     }
 
-    protected function addItemToSet($item, $url, $mtime = null)
+    protected function addItemToSet($item, $itemInfo = null)
     {
+        $mtime = null;
+        if ($itemInfo && isset($itemInfo['mtime'])) {
+            $mtime = $itemInfo['mtime'];
+        }
+
         if ($mtime instanceof \DateTime) {
             $mtime = $mtime->getTimestamp();
+        }
+
+        if ($item->type == 'url') {
+            $url = Url::to($item->url);
+        } else {
+            $url = $itemInfo['url'];
         }
 
         $xml = $this->makeXmlObject();
