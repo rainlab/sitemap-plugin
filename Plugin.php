@@ -1,5 +1,6 @@
 <?php namespace RainLab\Sitemap;
 
+use App;
 use Backend;
 use System\Classes\PluginBase;
 use System\Classes\SettingsManager;
@@ -23,6 +24,13 @@ class Plugin extends PluginBase
             'icon'        => 'icon-sitemap',
             'homepage'    => 'https://github.com/rainlab/sitemap-plugin'
         ];
+    }
+
+    public function register()
+    {
+        App::singleton('sitemap.definition', function() {
+            return Models\Definition::class;
+        });
     }
 
     /**
