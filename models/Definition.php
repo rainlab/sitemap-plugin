@@ -176,12 +176,21 @@ class Definition extends Model
         $urlSet->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
         $urlSet->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $urlSet->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
+        $this->fireEvent('rainlab.sitemap.extendUrlSet', [$urlSet]);
 
         return $this->urlSet = $urlSet;
     }
 
     protected function addItemToSet($item, $itemInfo = null)
     {
+        $xml = $this->makeXmlObject();
+        $urlSet = $this->makeUrlSet();
+
+        // allow overriding addItemToSet() method
+        if ($result = $this->fireEvent('rainlab.sitemap.overrideAddItemToSet', [$urlSet, $xml, $item, $itemInfo], true)) {
+            return $result;
+        }
+
         $mtime = null;
         if ($itemInfo && isset($itemInfo['mtime'])) {
             $mtime = $itemInfo['mtime'];
@@ -190,16 +199,13 @@ class Definition extends Model
         if ($mtime instanceof \DateTime) {
             $mtime = $mtime->getTimestamp();
         }
+        $mtime = $mtime ? date('c', $mtime) : date('c');
 
         if ($item->type == 'url') {
             $url = Url::to($item->url);
         } else {
             $url = $itemInfo['url'];
         }
-
-        $xml = $this->makeXmlObject();
-        $urlSet = $this->makeUrlSet();
-        $mtime = $mtime ? date('c', $mtime) : date('c');
 
         $urlElement = $this->makeUrlElement(
             $xml,
