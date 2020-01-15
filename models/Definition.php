@@ -174,6 +174,7 @@ class Definition extends Model
         $urlSet = $xml->createElement('urlset');
         $urlSet->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
         $urlSet->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $urlSet->setAttribute('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
         $urlSet->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 
         return $this->urlSet = $urlSet;
@@ -188,13 +189,16 @@ class Definition extends Model
         $xml = $this->makeXmlObject();
         $urlSet = $this->makeUrlSet();
         $mtime = $mtime ? date('c', $mtime) : date('c');
+        
+        
 
         $urlElement = $this->makeUrlElement(
             $xml,
             $url,
             $mtime,
             $item->changefreq,
-            $item->priority
+            $item->priority,
+            $item
         );
 
         if ($urlElement) {
@@ -204,9 +208,36 @@ class Definition extends Model
         return $urlSet;
     }
 
-    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority)
+    /**
+     * Build the URL element for the provided information
+     *
+     * @param DomDocument $xml The XML object to write to
+     * @param string $pageUrl The URL to generate an item for
+     * @param string $lastModified The ISO 8601 date that the item was last modified
+     * @param string $frequency The change frequency of the item
+     * @param float $priority The priority of the item from 0.1 to 1.0
+     * @param DefinitionItem $item The actual definition item object 
+     */
+    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority, $item)
     {
         if ($this->urlCount >= self::MAX_URLS) {
+            return false;
+        }
+        
+        /**
+         * @event rainlab.sitemap.beforeMakeUrlElement
+         * Provides an opportunity to prevent an element from being produced
+         *
+         * Example usage (stops the generation process):
+         *
+         *     Event::listen('rainlab.sitemap.beforeMakeUrlElement', function ((Definition) $definition, (DomDocument) $xml, (string) &$pageUrl, (string) &$lastModified, (string) &$frequency, (float) &$priority, (DefinitionItem) $item) {
+         *         if ($pageUrl === '/ignore-this-specific-page') {
+         *             return false;
+         *         }
+         *     });
+         *
+         */
+        if (Event::fire('rainlab.sitemap.beforeMakeUrlElement', [$this, $xml, &$pageUrl, &$lastModified, &$frequency, &$priority, $item], true) === false) {
             return false;
         }
 
@@ -217,6 +248,19 @@ class Definition extends Model
         $url->appendChild($xml->createElement('lastmod', $lastModified));
         $url->appendChild($xml->createElement('changefreq', $frequency));
         $url->appendChild($xml->createElement('priority', $priority));
+        
+        /**
+         * @event rainlab.sitemap.makeUrlElement
+         * Provides an opportunity to interact with a sitemap element after it has been generated.
+         *
+         * Example usage:
+         *
+         *     Event::listen('rainlab.sitemap.makeUrlElement', function ((Definition) $definition, (DomDocument) $xml, (string) $pageUrl, (string) $lastModified, (string) $frequency, (float) $priority, (DefinitionItem) $item, (ElementNode) $urlElement) {
+         *         $url->appendChild($xml->createElement('bestcmsever', 'OctoberCMS');
+         *     });
+         *
+         */
+        Event::fire('rainlab.sitemap.makeUrlElement', [$this, $xml, $pageUrl, $lastModified, $frequency, $priority, $item, $url]);
 
         return $url;
     }
