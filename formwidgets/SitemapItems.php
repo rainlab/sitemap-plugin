@@ -61,7 +61,7 @@ class SitemapItems extends FormWidgetBase
 
         $this->vars['emptyItem'] = $emptyItem;
 
-        $widgetConfig = $this->makeConfig('~/plugins/rainlab/sitemap/classes/definitionitem/fields.yaml');
+        $widgetConfig = $this->makeConfig('$/rainlab/sitemap/classes/definitionitem/fields.yaml');
         $widgetConfig->model = $sitemapItem;
         $widgetConfig->alias = $this->alias.'SitemapItem';
 
@@ -103,7 +103,7 @@ class SitemapItems extends FormWidgetBase
             $this->typeInfoCache[$item->type] = SitemapItem::getTypeInfo($item->type);
         }
 
-        if (isset($this->typeInfoCache[$item->type])) {
+        if (isset($this->typeListCache[$item->type])) {
             $result = trans($this->typeListCache[$item->type]);
 
             if ($item->type !== 'url') {
