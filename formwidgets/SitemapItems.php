@@ -1,6 +1,5 @@
 <?php namespace RainLab\Sitemap\FormWidgets;
 
-use Request;
 use RainLab\Sitemap\Classes\DefinitionItem as SitemapItem;
 use Backend\Classes\FormWidgetBase;
 
@@ -124,7 +123,7 @@ class SitemapItems extends FormWidgetBase
 
     protected function findReferenceName($search, $typeOptionList)
     {
-        $iterator = function($optionList, $path) use ($search, &$iterator)
+        $iterator = function ($optionList, $path) use ($search, &$iterator)
         {
             foreach ($optionList as $reference => $info) {
                 if ($reference == $search) {
