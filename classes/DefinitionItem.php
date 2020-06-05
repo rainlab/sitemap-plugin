@@ -1,6 +1,5 @@
 <?php namespace RainLab\Sitemap\Classes;
 
-use Model;
 use Event;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -147,7 +146,7 @@ class DefinitionItem
 
                         foreach ($value as $page) {
                             $baseName = $page->getBaseFileName();
-                            $pos = strrpos ($baseName, '/');
+                            $pos = strrpos($baseName, '/');
 
                             $dir = $pos !== false ? substr($baseName, 0, $pos).' / ' : null;
                             $cmsPages[$baseName] = strlen($page->title)
