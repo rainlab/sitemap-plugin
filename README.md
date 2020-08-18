@@ -1,6 +1,6 @@
 # Sitemap generator plugin
 
-This plugin will a generate `sitemap.xml` file in OctoberCMS based on desired CMS pages and others.
+This plugin will a generate `sitemap.xml` file in October CMS based on desired CMS pages and others.
 
 ## Viewing the sitemap
 
