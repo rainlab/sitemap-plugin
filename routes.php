@@ -19,5 +19,5 @@ Route::get('sitemap.xml', function()
     }
 
     return Response::make($definition->generateSitemap())
-        ->header("Content-Type", "application/xml");
+        ->header('Content-Type', 'application/xml');
 });
