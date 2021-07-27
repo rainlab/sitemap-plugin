@@ -114,7 +114,12 @@ class Definition extends Model
                      * Single item
                      */
                     if (isset($itemInfo['url'])) {
-                        $this->addItemToSet($item, $itemInfo['url'], array_get($itemInfo, 'mtime'));
+                        $this->addItemToSet(
+                            $item,
+                            $itemInfo['url'],
+                            array_get($itemInfo, 'mtime'),
+                            $itemInfo['alternate_locale_urls'] ?? null
+                        );
                     }
 
                     /*
@@ -128,7 +133,12 @@ class Definition extends Model
                         {
                             foreach ($items as $item) {
                                 if (isset($item['url'])) {
-                                    $this->addItemToSet($parentItem, $item['url'], array_get($item, 'mtime'));
+                                    $this->addItemToSet(
+                                        $parentItem,
+                                        $item['url'],
+                                        array_get($item, 'mtime'),
+                                        $itemInfo['alternate_locale_urls'] ?? null
+                                    );
                                 }
 
                                 if (isset($item['items'])) {
@@ -173,13 +183,14 @@ class Definition extends Model
         $xml = $this->makeXmlObject();
         $urlSet = $xml->createElement('urlset');
         $urlSet->setAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+        $urlSet->setAttribute('xmlns:xhtml', 'https://www.w3.org/1999/xhtml');
         $urlSet->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $urlSet->setAttribute('xsi:schemaLocation', 'http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd');
 
         return $this->urlSet = $urlSet;
     }
 
-    protected function addItemToSet($item, $url, $mtime = null)
+    protected function addItemToSet($item, $url, $mtime = null, $alternateLocaleUrls = null)
     {
         if ($mtime instanceof \DateTime) {
             $mtime = $mtime->getTimestamp();
@@ -194,7 +205,8 @@ class Definition extends Model
             $url,
             $mtime,
             $item->changefreq,
-            $item->priority
+            $item->priority,
+            $alternateLocaleUrls
         );
 
         if ($urlElement) {
@@ -204,7 +216,7 @@ class Definition extends Model
         return $urlSet;
     }
 
-    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority)
+    protected function makeUrlElement($xml, $pageUrl, $lastModified, $frequency, $priority, $alternateLocaleUrls = null)
     {
         if ($this->urlCount >= self::MAX_URLS) {
             return false;
@@ -217,6 +229,16 @@ class Definition extends Model
         $url->appendChild($xml->createElement('lastmod', $lastModified));
         $url->appendChild($xml->createElement('changefreq', $frequency));
         $url->appendChild($xml->createElement('priority', $priority));
+
+        if ($alternateLocaleUrls) {
+            foreach ($alternateLocaleUrls as $locale => $localeUrl) {
+                $alternateUrl = $xml->createElement('xhtml:link');
+                $alternateUrl->setAttribute('rel', 'alternate');
+                $alternateUrl->setAttribute('hreflang', $locale);
+                $alternateUrl->setAttribute('href', $localeUrl);
+                $url->appendChild($alternateUrl);
+            }
+        }
 
         return $url;
     }
