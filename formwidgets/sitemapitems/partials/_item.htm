@@ -10,7 +10,7 @@
             <span class="title"><?= e($this->getReferenceDescription($item)) ?></span>
             <span class="comment">
                 <?= e(trans('rainlab.sitemap::lang.item.priority')) ?>: <span class="priority"><?= e($item->priority) ?></span>,
-                <?= e(trans('rainlab.sitemap::lang.item.changefreq')) ?>: <span class="changefreq"><?= e($item->changefreq) ?></span>
+                <?= e(trans('rainlab.sitemap::lang.item.changefreq')) ?>: <span class="changefreq"><?= e(trans('rainlab.sitemap::lang.item.' . $item->changefreq)) ?></span>
             </span>
         </a>
 
