@@ -49,6 +49,7 @@ class SitemapItems extends FormWidgetBase
     {
         $sitemapItem = new SitemapItem;
 
+        $this->vars['name'] = $this->getFieldName();
         $this->vars['itemProperties'] = json_encode($sitemapItem->fillable);
         $this->vars['items'] = $this->model->items;
 
@@ -90,7 +91,7 @@ class SitemapItems extends FormWidgetBase
     /**
      * Returns the item reference description.
      * @param \RainLab\Pages\Classes\SitemapItem $item Specifies the sitemap item
-     * @return string 
+     * @return string
      */
     protected function getReferenceDescription($item)
     {
