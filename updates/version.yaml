@@ -1,11 +1,13 @@
-1.0.1: First version of Sitemap
-1.0.2:
+v1.0.1: First version of Sitemap
+v1.0.2:
     - Create definitions table
     - create_definitions_table.php
-1.0.3: Minor improvements to the code.
-1.0.4: Fixes issue where correct headers not being sent.
-1.0.5: Minor back-end styling fix.
-1.0.6: Minor fix to internal API.
-1.0.7: Added access premissions.
-1.0.8: Minor styling updates.
-1.0.9: Replaced the 500 error with 404 when no definition is found. Added Czech translation. Improved Turkish, Hungarian and Portuguese (Brazil) translations.
+v1.0.3: Minor improvements to the code.
+v1.0.4: Fixes issue where correct headers not being sent.
+v1.0.5: Minor back-end styling fix.
+v1.0.6: Minor fix to internal API.
+v1.0.7: Added access premissions.
+v1.0.8: Minor styling updates.
+v1.0.9: Replaced the 500 error with 404 when no definition is found. Added Czech translation. Improved Turkish, Hungarian and Portuguese (Brazil) translations.
+v1.1.0: Add support for alternate locales in sitemap
+v1.1.1: Fixes saving in October CMS v2
