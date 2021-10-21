@@ -118,7 +118,7 @@ class Definition extends Model
                             $item,
                             $itemInfo['url'],
                             array_get($itemInfo, 'mtime'),
-                            $itemInfo['alternate_locale_urls'] ?? null
+                            $item['alternate_locale_urls'] ?? null
                         );
                     }
 
