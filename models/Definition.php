@@ -117,8 +117,8 @@ class Definition extends Model
                         $this->addItemToSet(
                             $item,
                             $itemInfo['url'],
-                            array_get($itemInfo, 'mtime'),
-                            $item['alternate_locale_urls'] ?? null
+                            $itemInfo['mtime'] ?? null,
+                            $itemInfo['alternate_locale_urls'] ?? null
                         );
                     }
 
@@ -129,15 +129,14 @@ class Definition extends Model
 
                         $parentItem = $item;
 
-                        $itemIterator = function($items) use (&$itemIterator, $parentItem)
-                        {
+                        $itemIterator = function($items) use (&$itemIterator, $parentItem) {
                             foreach ($items as $item) {
                                 if (isset($item['url'])) {
                                     $this->addItemToSet(
                                         $parentItem,
                                         $item['url'],
-                                        array_get($item, 'mtime'),
-                                        $itemInfo['alternate_locale_urls'] ?? null
+                                        $item['mtime'] ?? null,
+                                        $item['alternate_locale_urls'] ?? null
                                     );
                                 }
 
