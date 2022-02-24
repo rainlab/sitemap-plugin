@@ -11,3 +11,4 @@ v1.0.8: Minor styling updates.
 v1.0.9: Replaced the 500 error with 404 when no definition is found. Added Czech translation. Improved Turkish, Hungarian and Portuguese (Brazil) translations.
 v1.1.0: Add support for alternate locales in sitemap
 v1.1.1: Fixes saving in October CMS v2
+v1.1.2: Minor logic fixes
