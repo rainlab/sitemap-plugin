@@ -69,7 +69,10 @@ class Definitions extends Controller
 
             $result = $this->asExtension('FormController')->update($recordId, $context);
 
-            $model = $this->formGetModel();
+            if (!$model = $this->formGetModel()) {
+                throw new ApplicationException('Unable to find the sitemap.');
+            }
+
             $theme = Theme::load($model->theme);
 
             /*
