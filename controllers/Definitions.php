@@ -3,7 +3,6 @@
 use Url;
 use Backend;
 use Request;
-use Redirect;
 use BackendMenu;
 use Cms\Classes\Theme;
 use Backend\Classes\Controller;
@@ -33,8 +32,9 @@ class Definitions extends Controller
         BackendMenu::setContext('October.System', 'system', 'settings');
         SettingsManager::setContext('RainLab.Sitemap', 'definitions');
 
-        $this->addJs('/modules/backend/assets/js/october.treeview.js', 'core');
-        $this->addJs('/plugins/rainlab/sitemap/assets/js/sitemap-definitions.js');
+        $this->addJs('/plugins/rainlab/sitemap/assets/js/october.treeview.js', 'RainLab.Sitemap');
+        $this->addJs('/plugins/rainlab/sitemap/assets/js/sitemap-definitions.js', 'RainLab.Sitemap');
+        $this->addCss('/plugins/rainlab/sitemap/assets/css/treeview.css', 'RainLab.Sitemap');
     }
 
     /**
