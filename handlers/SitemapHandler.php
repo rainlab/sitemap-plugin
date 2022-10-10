@@ -25,7 +25,7 @@ class SitemapHandler extends Controller
         }
         catch (ModelNotFoundException $e) {
             Log::info(trans('rainlab.sitemap::lang.definition.not_found'));
-            return View::make('cms::404');
+            return Response::make(View::make('cms::404'), 404);
         }
 
         return Response::make($definition->generateSitemap())
