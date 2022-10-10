@@ -1,5 +1,3 @@
 <?php
 
-use RainLab\Sitemap\Http\Controllers\SitemapController;
-
-Route::get('sitemap.xml', [SitemapController::class, 'sitemap']);
+Route::get('sitemap.xml', [\RainLab\Sitemap\Handlers\SitemapHandler::class, 'sitemap']);
