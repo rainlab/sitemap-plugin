@@ -426,12 +426,9 @@
 
     // TREEVIEW DATA-API
     // ===============
-    // $(window).load(function(){
-    //     $('[data-control=treeview]').treeView()
-    // })
 
-    $(document).render(function(){
-        $('[data-control=treeview]').treeView()
-    })
+    addEventListener('render', function() {
+        $('[data-control=treeview]').treeView();
+    });
 
 }(window.jQuery);
