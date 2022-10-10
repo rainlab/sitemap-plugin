@@ -14,3 +14,4 @@ v1.1.1: Fixes saving in October CMS v2
 v1.1.2: Minor logic fixes
 v1.2.0: Improve support with October v3.0
 v1.2.1: Adds route caching support
+v1.2.2: Fixes error when sitemap not found

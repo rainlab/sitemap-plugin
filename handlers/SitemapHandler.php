@@ -1,10 +1,10 @@
 <?php namespace RainLab\Sitemap\Handlers;
 
-use App;
+use View;
 use Log;
 use Response;
 use Cms\Classes\Theme;
-use Illuminate\Routing\Controller;
+use Cms\Classes\Controller;
 use RainLab\Sitemap\Models\Definition;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -25,8 +25,7 @@ class SitemapHandler extends Controller
         }
         catch (ModelNotFoundException $e) {
             Log::info(trans('rainlab.sitemap::lang.definition.not_found'));
-
-            return App::make(Controller::class)->setStatusCode(404)->run('/404');
+            return View::make('cms::404');
         }
 
         return Response::make($definition->generateSitemap())
