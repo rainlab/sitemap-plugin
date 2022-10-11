@@ -1,17 +1,17 @@
 <?php namespace RainLab\Sitemap\Handlers;
 
-use View;
 use Log;
+use View;
 use Response;
 use Cms\Classes\Theme;
-use Cms\Classes\Controller;
 use RainLab\Sitemap\Models\Definition;
+use Illuminate\Routing\Controller as ControllerBase;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * SitemapHandler
  */
-class SitemapHandler extends Controller
+class SitemapHandler extends ControllerBase
 {
     /**
      * sitemap route: api/package/browse
