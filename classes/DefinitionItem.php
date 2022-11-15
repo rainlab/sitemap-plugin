@@ -1,6 +1,7 @@
 <?php namespace RainLab\Sitemap\Classes;
 
 use Event;
+use RainLab\Sitemap\Helpers\CmsPageHelper;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -101,7 +102,11 @@ class DefinitionItem
      */
     public function getTypeOptions()
     {
-        $result = ['url' => trans('rainlab.sitemap::lang.item.url')];
+        $result = [
+            'url' => trans('rainlab.sitemap::lang.item.url'),
+            'cms-page' => 'CMS Page',
+        ];
+
         $apiResult = Event::fire('pages.menuitem.listTypes');
 
         if (is_array($apiResult)) {
@@ -132,7 +137,13 @@ class DefinitionItem
     public static function getTypeInfo($type)
     {
         $result = [];
-        $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$type]);
+
+        if ($type === 'cms-page') {
+            $apiResult = [CmsPageHelper::getMenuTypeInfo()];
+        }
+        else {
+            $apiResult = Event::fire('pages.menuitem.getTypeInfo', [$type]);
+        }
 
         if (is_array($apiResult)) {
             foreach ($apiResult as $typeInfo) {

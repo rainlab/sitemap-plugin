@@ -6,6 +6,7 @@ use Event;
 use Request;
 use DOMDocument;
 use Cms\Classes\Theme;
+use RainLab\Sitemap\Helpers\CmsPageHelper;
 use RainLab\Sitemap\Classes\DefinitionItem;
 
 /**
@@ -98,8 +99,12 @@ class Definition extends Model
              * Registered sitemap type
              */
             else {
-
-                $apiResult = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $theme]);
+                if ($item->type == 'cms-page') {
+                    $apiResult = [CmsPageHelper::resolveMenuItem($item, $currentUrl, $this->theme)];
+                }
+                else {
+                    $apiResult = Event::fire('pages.menuitem.resolveItem', [$item->type, $item, $currentUrl, $this->theme]);
+                }
 
                 if (!is_array($apiResult)) {
                     continue;
