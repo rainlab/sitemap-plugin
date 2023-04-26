@@ -17,3 +17,4 @@ v1.2.1: Adds route caching support
 v1.2.2: Fixes error when sitemap not found
 v1.2.3: Fixes support with October CMS v1
 v1.2.4: Fixes support with pagefinder events
+v1.2.6: Bump version
