@@ -13,8 +13,7 @@ handle: Site\Sitemap
 type: structure
 name: Sitemap
 drafts: false
-
-multisite: sync
+pagefinder: false
 
 structure:
     maxDepth: 1
@@ -34,7 +33,7 @@ fields:
         label: Priority
         commentAbove: The priority of this URL relative to other URLs on your site.
         type: radio
-        span: left
+        inlineOptions: true
         options:
             '0.1': '0.1'
             '0.2': '0.2'
@@ -51,7 +50,7 @@ fields:
         commentAbove: How frequently the page is likely to change.
         label: Change Frequency
         type: radio
-        span: right
+        inlineOptions: true
         options:
             always: Always
             hourly: Hourly
@@ -60,6 +59,23 @@ fields:
             monthly: Monthly
             yearly: Yearly
             never: Never
+
+    nesting:
+        label: Include nested items
+        shortLabel: Nesting
+        comment: Nested items could be generated dynamically by supported page references.
+        type: checkbox
+
+    replace:
+        label: Replace this item with its generated children
+        comment: Use this checkbox to push generated menu items to the same level with this item. This item itself will be hidden.
+        type: checkbox
+        column: false
+        scope: false
+        trigger:
+            action: disable|empty
+            field: nesting
+            condition: unchecked
 ```
 
 ## CMS Page Definition
@@ -76,20 +92,22 @@ headers[Content-Type] = 'application/xml'
 [collection sitemap]
 handle = "Site\Sitemap"
 ==
-{% macro render_sitemap_item(item, reference) %}
+{% macro render_sitemap_item(item, reference, isRoot) %}
     {% import _self as nav %}
-    {% if reference.items %}
-        {% for child in reference.items %}
-            {{ nav.render_sitemap_item(item, child) }}
-        {% endfor %}
-    {% else %}
+    {% set hideRootItem = isRoot and item.replace %}
+    {% if reference.url and not hideRootItem %}
         <url>
             <loc>{{ reference.url }}</loc>
             <lastmod>{{ reference.mtime|date('c') }}</lastmod>
             <changefreq>{{ item.changefreq }}</changefreq>
             <priority>{{ item.priority }}</priority>
         </url>
-    {% endif  %}
+    {% endif %}
+    {% if reference.items %}
+        {% for child in reference.items %}
+            {{ nav.render_sitemap_item(item, child) }}
+        {% endfor %}
+    {% endif %}
 {% endmacro %}
 {% import _self as nav %}
 <urlset
@@ -101,7 +119,8 @@ handle = "Site\Sitemap"
     {% for item in sitemap %}
         {{ nav.render_sitemap_item(
             item,
-            link(item.reference)
+            link(item.reference, { nesting: item.nesting }),
+            true
         ) }}
     {% endfor %}
 </urlset>

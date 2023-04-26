@@ -12,7 +12,9 @@ This plugin will a generate `sitemap.xml` file in October CMS based on desired C
 
 Once this plugin is installed and the sitemap has been configured. The sitemap can be viewed by accessing the file relative to the website base path. For example, if the website is hosted at https://octobercms.com it can be viewed by opening this URL:
 
-    https://octobercms.com/sitemap.xml
+```
+https://octobercms.com/sitemap.xml
+```
 
 ## Managing a sitemap definition
 

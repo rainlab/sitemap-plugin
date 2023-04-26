@@ -111,6 +111,11 @@ class DefinitionItem
                 }
 
                 foreach ($typeList as $typeCode => $typeName) {
+                    // In case newer syntax leaks through
+                    if (!is_string($typeName)) {
+                        continue;
+                    }
+
                     $result[$typeCode] = $typeName;
                 }
             }
