@@ -104,7 +104,11 @@ class SitemapItems extends FormWidgetBase
         }
 
         if (isset($this->typeListCache[$item->type])) {
-            $result = trans($this->typeListCache[$item->type]);
+            $result = trans(
+                is_array($this->typeListCache[$item->type])
+                ? $this->typeListCache[$item->type][0]
+                : $this->typeListCache[$item->type]
+            );
 
             if ($item->type !== 'url') {
                 if (isset($this->typeInfoCache[$item->type]['references'])) {
