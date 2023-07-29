@@ -6,7 +6,7 @@ v1.0.3: Minor improvements to the code.
 v1.0.4: Fixes issue where correct headers not being sent.
 v1.0.5: Minor back-end styling fix.
 v1.0.6: Minor fix to internal API.
-v1.0.7: Added access premissions.
+v1.0.7: Added access permissions.
 v1.0.8: Minor styling updates.
 v1.0.9: Replaced the 500 error with 404 when no definition is found. Added Czech translation. Improved Turkish, Hungarian and Portuguese (Brazil) translations.
 v1.1.0: Add support for alternate locales in sitemap
@@ -18,3 +18,4 @@ v1.2.2: Fixes error when sitemap not found
 v1.2.3: Fixes support with October CMS v1
 v1.2.4: Fixes support with pagefinder events
 v1.2.6: Bump version
+v1.2.7: Minor bug fixes using October CMS v3.4
