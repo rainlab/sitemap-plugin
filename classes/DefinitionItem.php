@@ -24,6 +24,11 @@ class DefinitionItem
     public $nesting;
 
     /**
+     * @var array|bool sites includes a lookup for other sites.
+     */
+    public $sites = false;
+
+    /**
      * @var string Specifies the item type - URL, static page, etc.
      */
     public $type;
