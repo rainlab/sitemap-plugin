@@ -4,7 +4,7 @@ As of October CMS v3.2 a [page finder widget](https://docs.octobercms.com/3.x/el
 
 The demo theme shipped with October CMS includes a sitemap CMS page (`themes/demo/sitemap.htm`) and a sitemap settings admin panel page provided by a Tailor blueprint.
 
-## Blueprint Definition
+## Example Blueprint Definition
 
 To build a new sitemap, create blueprint with the following example content. It uses a handle of `Site\Sitemap` and is a `structure` type with one level of depth. The navigation targets the settings area of the admin panel. The fields include a `pagefinder` form widget, `priority` and `changefreq` fields.
 

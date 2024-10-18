@@ -1,5 +1,5 @@
 /*
- * The sitemap item editor. Provides tools for managing the 
+ * The sitemap item editor. Provides tools for managing the
  * sitemap items.
  */
 +function ($) { "use strict";
@@ -26,7 +26,7 @@
         // Sub item is clicked in the master tabs
         this.$el.on('submenu.oc.treeview', $.proxy(this.onSubItemClick, this))
 
-        this.$el.on('click', 'a[data-control="add-item"]', function(e) {
+        this.$el.on('click', 'a[data-control~="add-item"]', function(e) {
             self.onCreateItem(e.target)
             return false
         })
@@ -67,7 +67,7 @@
             self = this
 
         $container.one('show.oc.popup', function(e){
-            $(document).trigger('render')
+            self.triggerRenderEvent();
 
             self.$popupContainer = $(e.relatedTarget)
             self.$itemDataContainer = $container.closest('li')
@@ -239,7 +239,7 @@
         $nestingFormGroup.toggle(typeInfo.nesting !== undefined && typeInfo.nesting)
         $urlFormGroup.toggle(type == 'url')
 
-        $(document).trigger('render')
+        this.triggerRenderEvent();
 
         if (focusList) {
             var focusElements = [
@@ -327,7 +327,7 @@
                     return
 
                 var typeInfoProperty = typeInfoPropertyMap[property] !== undefined ? typeInfoPropertyMap[property] : property
-                if ((typeInfo[typeInfoProperty] === undefined || typeInfo[typeInfoProperty] === false) 
+                if ((typeInfo[typeInfoProperty] === undefined || typeInfo[typeInfoProperty] === false)
                     && basicProperties[property] === undefined)
                     delete data[property]
             })
@@ -385,6 +385,17 @@
         $(window).trigger('oc.updateUi')
 
         this.onItemClick(item, true)
+    }
+
+    SitemapItemsEditor.prototype.triggerRenderEvent = function() {
+        // Vanilla AJAX Framework (v3)
+        if (window.oc && oc.Events) {
+            oc.Events.dispatch('render');
+        }
+        // Classic AJAX Framework (v1,2)
+        else {
+            $(document).trigger('render');
+        }
     }
 
     SitemapItemsEditor.DEFAULTS = {

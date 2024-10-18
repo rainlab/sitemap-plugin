@@ -19,3 +19,4 @@ v1.2.3: Fixes support with October CMS v1
 v1.2.4: Fixes support with pagefinder events
 v1.2.6: Bump version
 v1.2.7: Minor bug fixes using October CMS v3.4
+v1.2.8: Compatibility fixes for October v3.7
