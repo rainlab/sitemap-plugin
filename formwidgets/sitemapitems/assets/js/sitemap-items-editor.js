@@ -242,12 +242,13 @@
         this.triggerRenderEvent();
 
         if (focusList) {
-            var focusElements = [
-                $referenceFormGroup,
-                $cmsPageFormGroup,
-                $('div.custom-checkbox', $nestingFormGroup),
-                $('input', $urlFormGroup)
-            ]
+            var self = this,
+                focusElements = [
+                    $referenceFormGroup,
+                    $cmsPageFormGroup,
+                    $('div.custom-checkbox', $nestingFormGroup),
+                    $('input', $urlFormGroup)
+                ]
 
             $.each(focusElements, function(){
                 if (this.is(':visible')) {
@@ -255,7 +256,7 @@
 
                     window.setTimeout(function() {
                         if ($self.hasClass('dropdown-field'))
-                            $('select', $self).select2('focus', 100)
+                            self.focusSelect($('select', $self).get(0))
                         else $self.focus()
                     })
 
@@ -302,7 +303,7 @@
                         })
 
                         if ($input.prop("tagName") == 'SELECT')
-                            $input.select2('focus')
+                            self.focusSelect($input.get(0))
                         else
                             $input.focus()
 
@@ -395,6 +396,22 @@
         // Classic AJAX Framework (v1,2)
         else {
             $(document).trigger('render');
+        }
+    }
+
+    SitemapItemsEditor.prototype.focusSelect = function(select) {
+        var control = window.oc && oc.fetchControl ? oc.fetchControl(select, 'custom-select') : null
+
+        // Custom select control (v5)
+        if (control && control.focus) {
+            control.focus()
+        }
+        // Global Select2 (v1-4)
+        else if ($.fn.select2) {
+            $(select).select2('focus')
+        }
+        else {
+            select.focus()
         }
     }
 
